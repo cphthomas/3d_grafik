@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EK · Finansøkonom (online) 1. semester — Vox Explainer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="stage-shell">
+      <div id="stage-16x9">
+        <!-- Tilstand 1 (Standard): Ægte Vox-style Explainer -->
+        <div id="vox-layer" class="stage-layer active"></div>
+
+        <!-- Tilstand 2: Autentisk Moodle F27 med 3D-zoom & Mickey-pegefinger -->
+        <div id="moodle-layer" class="stage-layer"></div>
+
+        <!-- Tilstand 3: 3D-tidslinje i Three.js -->
+        <div id="three-layer" class="stage-layer">
+          <canvas id="gl-canvas"></canvas>
+          <canvas id="hud-canvas"></canvas>
+        </div>
+      </div>
+
+      <!-- Kontrolpanel (skjules automatisk ved optagelse eller tast 'H') -->
+      <div id="controls" class="controls-bar">
+        <div class="controls-left">
+          <button id="btn-mode" class="ctrl-btn ctrl-btn-mode" title="Skift mellem Vox Explainer, Moodle og 3D (M)">
+            Vox → Moodle
+          </button>
+          <button id="btn-prev" class="ctrl-btn" title="Forrige (Pil venstre)">◀ Forrige</button>
+          <button id="btn-next" class="ctrl-btn ctrl-btn-primary" title="Næste (Space / Pil højre)">Næste ▶</button>
+          <button id="btn-play" class="ctrl-btn" title="Auto-afspilning (A)">▶ Auto</button>
+          <span id="step-counter" class="step-badge">1 / 7</span>
+        </div>
+
+        <div class="controls-center">
+          <select id="step-select" class="step-select" aria-label="Hop til scene"></select>
+        </div>
+
+        <div class="controls-right">
+          <select id="mic-select" class="mic-select" title="Vælg mikrofon (fx Rode på Mac Mini)" aria-label="Vælg mikrofon">
+            <option value="default">🎤 Standard mikrofon</option>
+          </select>
+          <button id="btn-mic" class="ctrl-btn active" title="Slå mikrofon til/fra i optagelsen">🎤 TIL</button>
+          <button id="btn-demo-voice" class="ctrl-btn" title="Afspil dansk stemmedemo (manuelt klik)">
+            🔊 Stemmedemo
+          </button>
+          <button id="btn-rec-4k" class="ctrl-btn ctrl-btn-rec" title="Optag video + din stemme direkte (R)">
+            ● Optag 4K + Lyd
+          </button>
+          <button id="btn-hide" class="ctrl-btn" title="Skjul kontroller (H)">Skjul (H)</button>
+        </div>
+      </div>
+
+      <div id="rec-indicator" class="rec-indicator hidden">
+        <span class="rec-dot"></span>
+        <span id="rec-label">OPTAGER + LYD · 00:00</span>
+        <button id="btn-stop-rec" class="ctrl-btn ctrl-btn-stop">■ Stop & Gem</button>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
