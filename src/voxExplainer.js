@@ -16,10 +16,11 @@ export const VOX_SCENES = [
   { id: 'hook', label: '01 · Finansøkonom online på EK' },
   { id: 'slider', label: '02 · Interaktivt semester-overblik' },
   { id: 'unlock', label: '03 · Sådan åbner dine tiles hver torsdag' },
-  { id: 'wheel', label: '04 · Det levende uge-hjul' },
-  { id: 'metro', label: '05 · Fagrejsen (5 stationer)' },
-  { id: 'ola_stamp', label: '06 · Stempl de 3 OLA-hæfter' },
-  { id: 'exam_clock', label: '07 · 30 min. mundtlig eksamen' }
+  { id: 'rhythm_intro', label: '04 · To faste frister hver uge' },
+  { id: 'wheel_full', label: '05 · Det fulde uge-loop (animerede pile)' },
+  { id: 'metro', label: '06 · Fagrejsen (5 stationer)' },
+  { id: 'ola_stamp', label: '07 · Stempl de 3 OLA-hæfter' },
+  { id: 'exam_clock', label: '08 · 30 min. mundtlig eksamen' }
 ];
 
 const METRO_STATIONS = [
@@ -116,29 +117,28 @@ export function initVoxExplainer(container) {
     const tl = gsap.timeline();
     activeTimeline = tl;
 
-    // Dramatisk 3D-kameraindflyvning + filmisk zoom/pan (aldrig fladt PowerPoint-kamera!)
+    // Kontrolleret 3D-kameraindflyvning + blød dokumentar-zoom (klipper aldrig i kanterne!)
     gsap.killTweensOf(canvasEl);
     const dir = idx % 2 === 0 ? 1 : -1;
     gsap.fromTo(
       canvasEl,
-      { scale: 0.92, rotationY: dir * 7, rotationX: 2.5, x: dir * -24, opacity: 0.25 },
+      { scale: 0.96, rotationY: dir * 4.2, rotationX: 1.5, x: dir * -10, opacity: 0.35 },
       {
-        scale: 1.04,
-        rotationY: dir * -3.5,
-        rotationX: -1.2,
-        x: dir * 16,
+        scale: 1.0,
+        rotationY: dir * -1.8,
+        rotationX: -0.6,
+        x: dir * 6,
         opacity: 1,
-        duration: 0.75,
+        duration: 0.65,
         ease: 'power3.out',
         onComplete: () => {
-          // Kontinuerlig dokumentar-kamerakørsel gennem hele scenen
           gsap.to(canvasEl, {
-            scale: 1.11,
-            rotationY: dir * 3.8,
-            rotationX: 1.6,
-            x: dir * -14,
-            y: -8,
-            duration: 7.5,
+            scale: 1.035,
+            rotationY: dir * 1.8,
+            rotationX: 0.7,
+            x: dir * -6,
+            y: -3,
+            duration: 7.2,
             ease: 'sine.inOut'
           });
         }
@@ -384,81 +384,91 @@ export function initVoxExplainer(container) {
         .call(unlockNext, null, '+=1.4')
         .call(unlockNext, null, '+=1.4');
     } else if (idx === 3) {
-      // SCENE 4: STUDIO-GRADE ANIMEREDE SVG-PILE I UGE-LOOPET
-      const wheelSteps = [
-        { tag: 'UGE-START', title: 'Intro & Aktiviteter', desc: 'Du ser ugens korte introvideo og løser aktiviteterne individuelt i dit eget tempo.', color: '#0284c7' },
-        { tag: 'TORSDAG KL. 08.00', title: 'Aflevering + ny tile åbner', desc: 'Du uploader ugens aktiviteter i Moodle — samtidig åbner løsningsforslag, Kialo og næste uges tile!', color: '#dc2626' },
-        { tag: 'TEAMSAMARBEJDE', title: 'Temaprojekt i team', desc: 'I mødes online i jeres faste studieteam og bruger teorien på en virkelighedsnær case.', color: '#d97706' },
-        { tag: 'TIRSDAG KL. 08.00', title: 'Temaprojekt-deadline', desc: 'Teamet afleverer temaprojektet ugen efter og svarer hurtigt på ugens TrivselsBarometer.', color: '#002e6d' }
-      ];
-
+      // SCENE 4A: TO FASTE FRISTER HVER UGE (REN EDITORIAL INTRO)
       canvasEl.innerHTML = `
-        <div class="vx-scene vx-wheel-scene">
-          <div class="vx-wheel-left">
-            <div class="vx-kicker">UGERYTMEN</div>
-            <h2 class="vx-title">Samme <span class="vx-hl-wrap"><span class="vx-hl-txt">faste rytme</span><i class="vx-hl-bg"></i></span> hver uge</h2>
-            <div class="vx-wheel-card" id="vx-wheel-card">
-              <div class="vx-wc-tag" id="vx-wc-tag">TORSDAG KL. 08.00</div>
-              <h3 id="vx-wc-title">Aflevering + ny tile åbner</h3>
-              <p id="vx-wc-desc">Du uploader ugens aktiviteter i Moodle — samtidig åbner løsningsforslag, Kialo og næste uges tile!</p>
+        <div class="vx-scene vx-rhythm-intro">
+          <div class="vx-kicker">UGERYTMEN · TO FASTE FRISTER</div>
+          <h2 class="vx-title">Samme <span class="vx-hl-wrap"><span class="vx-hl-txt">faste rytme</span><i class="vx-hl-bg"></i></span> hver uge</h2>
+          <div class="vx-two-deadlines">
+            <div class="vx-dl-card vx-dl-red">
+              <div class="vx-dl-badge">TORSDAG KL. 08.00</div>
+              <h3>Aktiviteter & ny tile</h3>
+              <p>Du afleverer ugens individuelle aktiviteter — og i samme øjeblik åbner løsningsforslag, Kialo og næste uges tile i Moodle.</p>
             </div>
-          </div>
-          <div class="vx-wheel-right">
-            <div class="vx-loop-stage">
-              <svg viewBox="0 0 560 400" class="vx-loop-svg" aria-hidden="true">
-                <defs>
-                  <marker id="arr-dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
-                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#14171a" />
-                  </marker>
-                  <marker id="arr-active" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#dc2626" />
-                  </marker>
-                  <marker id="arr-gold" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#d97706" />
-                  </marker>
-                  <marker id="arr-navy" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#002e6d" />
-                  </marker>
-                  <marker id="arr-blue" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
-                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#0284c7" />
-                  </marker>
-                </defs>
-
-                <!-- 4 smukke buede pile der forbinder 01 -> 02 -> 03 -> 04 -> 01 -->
-                <path id="arc-0" class="vx-loop-arc" d="M 358 58 Q 465 72 468 158" marker-end="url(#arr-dark)" />
-                <path id="arc-1" class="vx-loop-arc" d="M 468 242 Q 465 328 368 342" marker-end="url(#arr-dark)" />
-                <path id="arc-2" class="vx-loop-arc" d="M 192 342 Q 95 328 92 242" marker-end="url(#arr-dark)" />
-                <path id="arc-3" class="vx-loop-arc" d="M 92 158 Q 95 72 202 58" marker-end="url(#arr-dark)" />
-
-                <!-- Animeret lysende strøm-sti langs hver bue -->
-                <path id="arc-flow-0" class="vx-loop-flow" d="M 358 58 Q 465 72 468 158" stroke="#dc2626" marker-end="url(#arr-active)" />
-                <path id="arc-flow-1" class="vx-loop-flow" d="M 468 242 Q 465 328 368 342" stroke="#d97706" marker-end="url(#arr-gold)" />
-                <path id="arc-flow-2" class="vx-loop-flow" d="M 192 342 Q 95 328 92 242" stroke="#002e6d" marker-end="url(#arr-navy)" />
-                <path id="arc-flow-3" class="vx-loop-flow" d="M 92 158 Q 95 72 202 58" stroke="#0284c7" marker-end="url(#arr-blue)" />
-
-                <!-- Center-emblem -->
-                <rect x="215" y="168" width="130" height="64" fill="#14171a" />
-                <rect x="215" y="168" width="130" height="4" fill="#f7e81b" />
-                <text x="280" y="196" text-anchor="middle" fill="#f7e81b" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="700" letter-spacing="1.5">FAST</text>
-                <text x="280" y="216" text-anchor="middle" fill="#ffffff" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="700" letter-spacing="1.5">UGE-LOOP</text>
-              </svg>
-
-              ${wheelSteps
-                .map(
-                  (s, i) => `
-                <button class="vx-loop-node ln-${i}" data-i="${i}" style="--c:${s.color}">
-                  <b>0${i + 1}</b>
-                  <span>${s.tag}</span>
-                </button>
-              `
-                )
-                .join('')}
+            <div class="vx-dl-card vx-dl-navy">
+              <div class="vx-dl-badge vx-dl-gold">TIRSDAG KL. 08.00 (UGEN EFTER)</div>
+              <h3>Temaprojekt i teamet</h3>
+              <p>Sammen med dit faste studieteam afleverer I ugens virkelighedsnære temaprojekt og udfylder TrivselsBarometer.</p>
             </div>
           </div>
         </div>
       `;
+      tl.from('.vx-kicker, .vx-title', { y: 16, opacity: 0, stagger: 0.08, duration: 0.42 })
+        .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
+        .from('.vx-dl-card', { y: 28, opacity: 0, stagger: 0.16, duration: 0.5, ease: 'back.out(1.2)' }, '-=0.15');
+    } else if (idx === 4) {
+      // SCENE 4B: FULDSKÆRMS ANIMERET UGE-LOOP (FYLDER HELE RAMMEN!)
+      const wheelSteps = [
+        { tag: 'UGE-START', sub: 'Introvideo & individuelle aktiviteter', color: '#0284c7' },
+        { tag: 'TORSDAG KL. 08.00', sub: 'Aflevering + næste tile åbner', color: '#dc2626' },
+        { tag: 'TEAMSAMARBEJDE', sub: 'Case-arbejde i dit studieteam', color: '#d97706' },
+        { tag: 'TIRSDAG KL. 08.00', sub: 'Temaprojekt & TrivselsBarometer', color: '#002e6d' }
+      ];
 
-      // Forbered stroke-længde på de 4 animerede pile
+      canvasEl.innerHTML = `
+        <div class="vx-scene vx-loop-full">
+          <div class="vx-loop-stage-full">
+            <svg viewBox="0 0 860 440" class="vx-loop-svg" aria-hidden="true">
+              <defs>
+                <marker id="arr-dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                  <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#14171a" />
+                </marker>
+                <marker id="arr-active" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+                  <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#dc2626" />
+                </marker>
+                <marker id="arr-gold" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+                  <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#d97706" />
+                </marker>
+                <marker id="arr-navy" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+                  <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#002e6d" />
+                </marker>
+                <marker id="arr-blue" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+                  <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#0284c7" />
+                </marker>
+              </defs>
+
+              <!-- 4 store, fejende buede pile der fylder hele lærredet -->
+              <path class="vx-loop-arc" d="M 555 62 Q 725 78 730 172" marker-end="url(#arr-dark)" />
+              <path class="vx-loop-arc" d="M 730 268 Q 725 362 555 378" marker-end="url(#arr-dark)" />
+              <path class="vx-loop-arc" d="M 305 378 Q 135 362 130 268" marker-end="url(#arr-dark)" />
+              <path class="vx-loop-arc" d="M 130 172 Q 135 78 305 62" marker-end="url(#arr-dark)" />
+
+              <path id="arc-flow-0" class="vx-loop-flow" d="M 555 62 Q 725 78 730 172" stroke="#dc2626" marker-end="url(#arr-active)" />
+              <path id="arc-flow-1" class="vx-loop-flow" d="M 730 268 Q 725 362 555 378" stroke="#d97706" marker-end="url(#arr-gold)" />
+              <path id="arc-flow-2" class="vx-loop-flow" d="M 305 378 Q 135 362 130 268" stroke="#002e6d" marker-end="url(#arr-navy)" />
+              <path id="arc-flow-3" class="vx-loop-flow" d="M 130 172 Q 135 78 305 62" stroke="#0284c7" marker-end="url(#arr-blue)" />
+
+              <!-- Stort center-emblem -->
+              <rect x="340" y="178" width="180" height="84" fill="#14171a" />
+              <rect x="340" y="178" width="180" height="5" fill="#f7e81b" />
+              <text x="430" y="213" text-anchor="middle" fill="#f7e81b" font-family="IBM Plex Mono, monospace" font-size="16" font-weight="700" letter-spacing="2">FAST</text>
+              <text x="430" y="239" text-anchor="middle" fill="#ffffff" font-family="IBM Plex Mono, monospace" font-size="16" font-weight="700" letter-spacing="2">UGE-LOOP</text>
+            </svg>
+
+            ${wheelSteps
+              .map(
+                (s, i) => `
+              <button class="vx-loop-node vx-loop-node-lg ln-${i}" data-i="${i}" style="--c:${s.color}">
+                <b>0${i + 1} · ${s.tag}</b>
+                <span class="vx-ln-sub">${s.sub}</span>
+              </button>
+            `
+              )
+              .join('')}
+          </div>
+        </div>
+      `;
+
       const flowArcs = [0, 1, 2, 3].map((k) => {
         const p = canvasEl.querySelector(`#arc-flow-${k}`);
         const len = p.getTotalLength();
@@ -468,16 +478,7 @@ export function initVoxExplainer(container) {
       });
 
       const selectWheel = (i) => {
-        const s = wheelSteps[i];
         canvasEl.querySelectorAll('.vx-loop-node').forEach((n, idx2) => n.classList.toggle('is-active', idx2 === i));
-        const tag = canvasEl.querySelector('#vx-wc-tag');
-        tag.textContent = s.tag;
-        tag.style.background = s.color;
-        canvasEl.querySelector('#vx-wc-title').textContent = s.title;
-        canvasEl.querySelector('#vx-wc-desc').textContent = s.desc;
-        gsap.fromTo('#vx-wheel-card', { y: 10, opacity: 0.65 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' });
-
-        // Tegn den indkommende bue-pil levende mod den aktive node!
         const arcIdx = (i + 3) % 4;
         flowArcs.forEach((fa, k) => {
           gsap.killTweensOf(fa.p);
@@ -495,14 +496,12 @@ export function initVoxExplainer(container) {
       });
       selectWheel(0);
 
-      tl.from('.vx-wheel-left > *', { x: -18, opacity: 0, stagger: 0.08, duration: 0.4 })
-        .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-        .from('.vx-loop-node', { scale: 0.75, opacity: 0, stagger: 0.1, duration: 0.4, ease: 'back.out(1.4)' }, '-=0.25')
-        .call(() => selectWheel(1), null, '+=1.4')
-        .call(() => selectWheel(2), null, '+=1.7')
-        .call(() => selectWheel(3), null, '+=1.7')
-        .call(() => selectWheel(0), null, '+=1.7');
-    } else if (idx === 4) {
+      tl.from('.vx-loop-node', { scale: 0.78, opacity: 0, stagger: 0.1, duration: 0.4, ease: 'back.out(1.4)' })
+        .call(() => selectWheel(1), null, '+=1.35')
+        .call(() => selectWheel(2), null, '+=1.55')
+        .call(() => selectWheel(3), null, '+=1.55')
+        .call(() => selectWheel(0), null, '+=1.55');
+    } else if (idx === 5) {
       // SCENE 5: INTERAKTIVT METRO-KORT OVER DE 5 FAGOMRÅDER (INGEN BARCHARTS!)
       const pathD = `M ${METRO_STATIONS[0].x} ${METRO_STATIONS[0].y} ` +
         METRO_STATIONS.slice(1)
@@ -577,8 +576,8 @@ export function initVoxExplainer(container) {
         .call(() => selectStation(2), null, '+=1.35')
         .call(() => selectStation(3), null, '+=1.35')
         .call(() => selectStation(4), null, '+=1.35');
-    } else if (idx === 5) {
-      // SCENE 6: INTERAKTIV OLA-STEMPEL-MASKINE (KLIK FOR AT STEMPLE GODKENDT!)
+    } else if (idx === 6) {
+      // SCENE 7: INTERAKTIV OLA-STEMPEL-MASKINE (KLIK FOR AT STEMPLE GODKENDT!)
       canvasEl.innerHTML = `
         <div class="vx-scene vx-olas">
           <div class="vx-kicker">OBLIGATORISKE MILEPÆLE · KLIK FOR AT STEMPLE</div>

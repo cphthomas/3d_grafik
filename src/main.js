@@ -572,7 +572,7 @@ function playSyncedVoxScene(idx) {
   stopVoiceAudio();
   goToActiveStep(idx);
 
-  sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=4`);
+  sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=5`);
   btnDemoVoice.classList.add('active');
   btnDemoVoice.textContent = '⏹ Stop stemme';
 
@@ -737,33 +737,16 @@ function animate() {
   }
 }
 
-// --- REN VOX VIDEO-AFSPILLER (PLAY / PAUSE + TIDSLINJE-SCRUBBER) ---
-const vpBar = document.getElementById('vox-player-bar');
+// --- DISKRETE MINI-KONTROLLER I TOPBAREN (INGEN BUND-SLIDER!) ---
+const miniControls = document.getElementById('vox-mini-controls');
 const vpPlay = document.getElementById('vp-play');
-const vpTime = document.getElementById('vp-time');
-const vpScrubber = document.getElementById('vp-scrubber');
-const vpFill = document.getElementById('vp-scrubber-fill');
 const vpMute = document.getElementById('vp-mute');
 let isMuted = false;
-
-function formatSec(s) {
-  const m = Math.floor(s / 60);
-  const r = Math.floor(s % 60);
-  return `${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
-}
-
-function updatePlayerProgress(idx, sceneFrac = 0) {
-  const total = getTotalSteps();
-  const pct = Math.min(100, Math.max(0, ((idx + sceneFrac) / total) * 100));
-  vpFill.style.width = `${pct}%`;
-  vpTime.textContent = formatSec(Math.round((pct / 100) * 62));
-  vpPlay.textContent = isAutoPlaying ? '⏸' : '▶';
-}
 
 vpPlay.addEventListener('click', () => {
   if (activeMode !== 'vox') setMode('vox');
   toggleAutoPlay(true);
-  updatePlayerProgress(getCurrentStep(), 0);
+  vpPlay.textContent = isAutoPlaying ? '⏸' : '▶';
   vpPlay.blur();
 });
 
@@ -774,28 +757,10 @@ vpMute.addEventListener('click', () => {
   vpMute.blur();
 });
 
-vpScrubber.addEventListener('click', (e) => {
-  const r = vpScrubber.getBoundingClientRect();
-  const ratio = Math.min(0.999, Math.max(0, (e.clientX - r.left) / r.width));
-  const targetIdx = Math.floor(ratio * getTotalSteps());
-  if (isAutoPlaying && activeMode === 'vox') {
-    playSyncedVoxScene(targetIdx);
-  } else {
-    goToActiveStep(targetIdx);
-    updatePlayerProgress(targetIdx, 0);
-  }
-});
-
-// Opdatér video-scrubber løbende — vis kun afspillerbaren når filmen faktisk er startet (eller forbi forside)
 setInterval(() => {
-  const showBar = activeMode === 'vox' && (isAutoPlaying || getCurrentStep() > 0);
-  if (showBar) {
-    vpBar.style.display = 'flex';
-    const frac = sceneAudio && sceneAudio.duration ? sceneAudio.currentTime / sceneAudio.duration : 0;
-    updatePlayerProgress(getCurrentStep(), isAutoPlaying ? frac : 0);
-  } else {
-    vpBar.style.display = 'none';
-  }
+  const showMini = activeMode === 'vox' && (isAutoPlaying || getCurrentStep() > 0);
+  miniControls.style.display = showMini ? 'flex' : 'none';
+  vpPlay.textContent = isAutoPlaying ? '⏸' : '▶';
 }, 200);
 
 // Hvis siden åbnes med ?student=1 (til Moodle-studerende), vis KUN den rene Vox film-afspiller (ingen PowerPoint-knapper!)

@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-D5Snosfj.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-B6_09XHT.css">
+    <script type="module" crossorigin src="./assets/index-C7QwX-AL.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DDr9Pm1z.css">
   </head>
   <body>
     <div id="stage-shell">
@@ -28,15 +28,10 @@
           <canvas id="hud-canvas"></canvas>
         </div>
 
-        <!-- Ren Vox video-afspiller i bunden af 16:9-rammen -->
-        <div class="vox-player-bar" id="vox-player-bar">
-          <button id="vp-play" class="vp-btn" title="Afspil / Pause (Space)">▶</button>
-          <span id="vp-time" class="vp-time">00:00</span>
-          <div class="vp-scrubber" id="vp-scrubber" title="Klik for at hoppe i filmen">
-            <div class="vp-scrubber-fill" id="vp-scrubber-fill"></div>
-          </div>
-          <span id="vp-duration" class="vp-time">01:02</span>
-          <button id="vp-mute" class="vp-btn" title="Lyd til/fra">🔊</button>
+        <!-- Diskrete mini-knapper i topbaren i stedet for bund-slider (giver 100% ren filmflade!) -->
+        <div class="vox-mini-controls" id="vox-mini-controls">
+          <button id="vp-play" class="vm-btn" title="Afspil / Pause (Space)">▶</button>
+          <button id="vp-mute" class="vm-btn" title="Lyd til/fra">🔊</button>
         </div>
       </div>
 
