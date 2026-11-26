@@ -119,21 +119,21 @@ function createCardTexture(node, isActive = false) {
   ctx.strokeRect(4, 4, 504, 632);
 
   ctx.fillStyle = col;
-  ctx.font = '700 22px "JetBrains Mono", monospace';
+  ctx.font = '700 22px "IBM Plex Mono", monospace';
   ctx.fillText(THEME_COLORS[node.theme].label, 34, 72);
 
   ctx.fillStyle = '#ffffff';
-  ctx.font = '800 68px "Inter", sans-serif';
+  ctx.font = '700 68px "Space Grotesk", sans-serif';
   ctx.fillText(node.code, 34, 158);
 
   ctx.fillStyle = '#e2e8f0';
-  ctx.font = '700 36px "Inter", sans-serif';
+  ctx.font = '700 36px "IBM Plex Sans", sans-serif';
   wrapCardText(ctx, node.shortTitle, 34, 224, 444, 44);
 
   ctx.fillStyle = 'rgba(148,163,184,0.25)';
   ctx.fillRect(34, 330, 444, 2);
 
-  ctx.font = '500 22px "Inter", sans-serif';
+  ctx.font = '500 22px "IBM Plex Sans", sans-serif';
   node.bullets.slice(0, 3).forEach((b, idx) => {
     const clean = b.replace('MILEPÆL: ', '');
     ctx.fillStyle = col;
@@ -143,14 +143,14 @@ function createCardTexture(node, isActive = false) {
   });
 
   ctx.fillStyle = '#94a3b8';
-  ctx.font = '600 20px "JetBrains Mono", monospace';
+  ctx.font = '600 20px "IBM Plex Mono", monospace';
   ctx.fillText(node.dates.slice(0, 34), 34, 588);
 
   if (node.ola) {
     ctx.fillStyle = '#facc15';
     ctx.fillRect(34, 514, 210, 44);
     ctx.fillStyle = '#060911';
-    ctx.font = '800 22px "JetBrains Mono", monospace';
+    ctx.font = '700 22px "IBM Plex Mono", monospace';
     ctx.fillText(`★ ${node.ola.label}`, 52, 544);
   }
 
@@ -313,8 +313,14 @@ voxCtrl.onStepChange((idx, total) => {
   if (activeMode === 'vox') updateStepUi(idx, total);
 });
 
-voxCtrl.onRequestPlay(() => {
-  if (!isAutoPlaying) toggleAutoPlay(true);
+voxCtrl.onRequestPlay((restart = false) => {
+  if (restart) {
+    stopAutoPlay();
+    voxCtrl.goToStep(0);
+    toggleAutoPlay(true);
+  } else if (!isAutoPlaying) {
+    toggleAutoPlay(true);
+  }
 });
 
 moodleCtrl.onStepChange((idx, total) => {
@@ -573,6 +579,7 @@ function playSyncedVoxScene(idx) {
   goToActiveStep(idx);
 
   sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=5`);
+  sceneAudio.muted = isMuted;
   btnDemoVoice.classList.add('active');
   btnDemoVoice.textContent = '⏹ Stop stemme';
 
@@ -742,26 +749,48 @@ const miniControls = document.getElementById('vox-mini-controls');
 const vpPlay = document.getElementById('vp-play');
 const vpMute = document.getElementById('vp-mute');
 let isMuted = false;
+let lastMiniPlaying = null;
+let lastMiniMuted = null;
+
+const SVG_PLAY =
+  '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><polygon points="3,2 14,8 3,14"/></svg>';
+const SVG_PAUSE =
+  '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" aria-hidden="true"><rect x="3" y="2.5" width="3.5" height="11"/><rect x="9.5" y="2.5" width="3.5" height="11"/></svg>';
+const SVG_SOUND_ON =
+  '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polygon points="2,6 5.5,6 9.5,2.5 9.5,13.5 5.5,10 2,10" fill="currentColor" stroke="none"/><path d="M11.5 5.2a3.8 3.8 0 0 1 0 5.6M13.5 3.3a6.5 6.5 0 0 1 0 9.4" stroke-linecap="square"/></svg>';
+const SVG_SOUND_OFF =
+  '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><polygon points="2,6 5.5,6 9.5,2.5 9.5,13.5 5.5,10 2,10" fill="currentColor" stroke="none"/><line x1="11.5" y1="5.5" x2="15" y2="10.5"/><line x1="15" y1="5.5" x2="11.5" y2="10.5"/></svg>';
+
+function syncMiniControls() {
+  const showMini = activeMode === 'vox' && (isAutoPlaying || getCurrentStep() > 0);
+  miniControls.style.display = showMini ? 'flex' : 'none';
+  if (lastMiniPlaying !== isAutoPlaying) {
+    lastMiniPlaying = isAutoPlaying;
+    vpPlay.innerHTML = isAutoPlaying ? SVG_PAUSE : SVG_PLAY;
+    vpPlay.classList.toggle('is-active', isAutoPlaying);
+  }
+  if (lastMiniMuted !== isMuted) {
+    lastMiniMuted = isMuted;
+    vpMute.innerHTML = isMuted ? SVG_SOUND_OFF : SVG_SOUND_ON;
+    vpMute.classList.toggle('is-muted', isMuted);
+  }
+}
 
 vpPlay.addEventListener('click', () => {
   if (activeMode !== 'vox') setMode('vox');
   toggleAutoPlay(true);
-  vpPlay.textContent = isAutoPlaying ? '⏸' : '▶';
+  syncMiniControls();
   vpPlay.blur();
 });
 
 vpMute.addEventListener('click', () => {
   isMuted = !isMuted;
   if (sceneAudio) sceneAudio.muted = isMuted;
-  vpMute.textContent = isMuted ? '🔇' : '🔊';
+  syncMiniControls();
   vpMute.blur();
 });
 
-setInterval(() => {
-  const showMini = activeMode === 'vox' && (isAutoPlaying || getCurrentStep() > 0);
-  miniControls.style.display = showMini ? 'flex' : 'none';
-  vpPlay.textContent = isAutoPlaying ? '⏸' : '▶';
-}, 200);
+setInterval(syncMiniControls, 200);
 
 // Hvis siden åbnes med ?student=1 (til Moodle-studerende), vis KUN den rene Vox film-afspiller (ingen PowerPoint-knapper!)
 const isStudentEmbed = new URLSearchParams(window.location.search).get('student') === '1';
