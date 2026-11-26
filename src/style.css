@@ -914,8 +914,8 @@ html, body {
 
 .vx-orbit-wrap {
   position: relative;
-  width: 34cqw;
-  height: 46cqh;
+  width: 40cqw;
+  height: 48cqh;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -923,20 +923,20 @@ html, body {
 }
 
 .vx-orbit-ring {
-  width: 24cqw;
-  height: 24cqw;
-  border: 3px dashed #111317;
+  width: 28cqw;
+  height: 32cqh;
+  border: 2px dashed rgba(17, 19, 23, 0.55);
   position: absolute;
 }
 
 .vx-orbit-center {
   background: #111317;
-  color: #f5c518;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(9px, 1.05cqw, 15px);
-  font-weight: 800;
+  color: #f7e81b;
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace;
+  font-size: clamp(8.5px, 0.95cqw, 14px);
+  font-weight: 700;
   text-align: center;
-  padding: 1.4cqh 1.2cqw;
+  padding: 1.1cqh 1cqw;
   z-index: 2;
 }
 
@@ -974,14 +974,14 @@ html, body {
   transform: scale(1.08);
 }
 
-.vx-orbit-node.pos-0 { top: 2cqh; left: 50%; transform: translateX(-50%); }
-.vx-orbit-node.pos-0.is-active { transform: translateX(-50%) scale(1.08); }
-.vx-orbit-node.pos-1 { right: 0; top: 50%; transform: translateY(-50%); }
-.vx-orbit-node.pos-1.is-active { transform: translateY(-50%) scale(1.08); }
-.vx-orbit-node.pos-2 { bottom: 2cqh; left: 50%; transform: translateX(-50%); }
-.vx-orbit-node.pos-2.is-active { transform: translateX(-50%) scale(1.08); }
-.vx-orbit-node.pos-3 { left: 0; top: 50%; transform: translateY(-50%); }
-.vx-orbit-node.pos-3.is-active { transform: translateY(-50%) scale(1.08); }
+.vx-orbit-node.pos-0 { top: 1cqh; left: 50%; transform: translateX(-50%); }
+.vx-orbit-node.pos-0.is-active { transform: translateX(-50%) scale(1.06); }
+.vx-orbit-node.pos-1 { right: -1cqw; top: 50%; transform: translateY(-50%); }
+.vx-orbit-node.pos-1.is-active { transform: translateY(-50%) scale(1.06); }
+.vx-orbit-node.pos-2 { bottom: 1cqh; left: 50%; transform: translateX(-50%); }
+.vx-orbit-node.pos-2.is-active { transform: translateX(-50%) scale(1.06); }
+.vx-orbit-node.pos-3 { left: -1cqw; top: 50%; transform: translateY(-50%); }
+.vx-orbit-node.pos-3.is-active { transform: translateY(-50%) scale(1.06); }
 
 /* Scene 5: Interaktivt metro-kort */
 .vx-metro-board {
