@@ -549,26 +549,79 @@ function stopRecording() {
   }
 }
 
-// --- AUTO-AFSPILNING & KNAPPER ---
+// --- AUTO-AFSPILNING (SYNKRONISERET MED DANSK STEMME I VOX-TILSTAND) ---
 let autoPlayTimer = null;
 let isAutoPlaying = false;
+let sceneAudio = null;
 
-function toggleAutoPlay() {
-  isAutoPlaying = !isAutoPlaying;
-  btnPlay.classList.toggle('active', isAutoPlaying);
-  btnPlay.textContent = isAutoPlaying ? '⏸ Pause' : '▶ Auto';
+function stopVoiceAudio() {
+  if (sceneAudio) {
+    sceneAudio.pause();
+    sceneAudio = null;
+  }
+  btnDemoVoice.classList.remove('active');
+  btnDemoVoice.textContent = '🔊 Afspil med stemme';
+}
 
+function playSyncedVoxScene(idx) {
+  if (!isAutoPlaying || activeMode !== 'vox') return;
+  stopVoiceAudio();
+  goToActiveStep(idx);
+
+  sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=2`);
+  btnDemoVoice.classList.add('active');
+  btnDemoVoice.textContent = '⏹ Stop stemme';
+
+  sceneAudio.addEventListener('ended', () => {
+    if (!isAutoPlaying) return;
+    if (idx < getTotalSteps() - 1) {
+      autoPlayTimer = setTimeout(() => playSyncedVoxScene(idx + 1), 650);
+    } else {
+      stopAutoPlay();
+    }
+  });
+
+  sceneAudio.play().catch(() => {
+    // Fallback hvis browser blokerer lyd
+    autoPlayTimer = setTimeout(() => {
+      if (idx < getTotalSteps() - 1) playSyncedVoxScene(idx + 1);
+      else stopAutoPlay();
+    }, 5500);
+  });
+}
+
+function stopAutoPlay() {
+  isAutoPlaying = false;
+  btnPlay.classList.remove('active');
+  btnPlay.textContent = '▶ Auto';
+  if (autoPlayTimer) {
+    clearTimeout(autoPlayTimer);
+    clearInterval(autoPlayTimer);
+    autoPlayTimer = null;
+  }
+  stopVoiceAudio();
+}
+
+function toggleAutoPlay(withVoice = true) {
   if (isAutoPlaying) {
+    stopAutoPlay();
+    return;
+  }
+  isAutoPlaying = true;
+  btnPlay.classList.add('active');
+  btnPlay.textContent = '⏸ Pause';
+
+  if (activeMode === 'vox' && withVoice) {
+    const startIdx = getCurrentStep() >= getTotalSteps() - 1 ? 0 : getCurrentStep();
+    playSyncedVoxScene(startIdx);
+  } else {
     autoPlayTimer = setInterval(() => {
       if (getCurrentStep() < getTotalSteps() - 1) {
         goToActiveStep(getCurrentStep() + 1);
       } else {
-        toggleAutoPlay();
+        stopAutoPlay();
       }
     }, 5200);
-  } else if (autoPlayTimer) {
-    clearInterval(autoPlayTimer);
-    autoPlayTimer = null;
   }
 }
 
@@ -595,26 +648,11 @@ btnMic.addEventListener('click', () => {
   btnMic.blur();
 });
 
-// Manuel afspilning af ElevenLabs-stemmedemo (spiller aldrig automatisk)
-let demoAudio = null;
+// Manuel afspilning af hele Vox-explaineren med synkroniseret dansk kvindestemme
+btnDemoVoice.textContent = '🔊 Afspil med stemme';
 btnDemoVoice.addEventListener('click', () => {
-  if (!demoAudio) {
-    demoAudio = new Audio('./audio/intro_demo.mp3');
-    demoAudio.addEventListener('ended', () => {
-      btnDemoVoice.classList.remove('active');
-      btnDemoVoice.textContent = '🔊 Stemmedemo';
-    });
-  }
-  if (demoAudio.paused) {
-    demoAudio.currentTime = 0;
-    demoAudio.play();
-    btnDemoVoice.classList.add('active');
-    btnDemoVoice.textContent = '⏹ Stop demo';
-  } else {
-    demoAudio.pause();
-    btnDemoVoice.classList.remove('active');
-    btnDemoVoice.textContent = '🔊 Stemmedemo';
-  }
+  if (activeMode !== 'vox') setMode('vox');
+  toggleAutoPlay(true);
   btnDemoVoice.blur();
 });
 micSelect.addEventListener('change', () => micSelect.blur());
