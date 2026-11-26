@@ -578,7 +578,7 @@ function playSyncedVoxScene(idx) {
   stopVoiceAudio();
   goToActiveStep(idx);
 
-  sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=5`);
+  sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=6`);
   sceneAudio.muted = isMuted;
   btnDemoVoice.classList.add('active');
   btnDemoVoice.textContent = '⏹ Stop stemme';
@@ -586,7 +586,7 @@ function playSyncedVoxScene(idx) {
   sceneAudio.addEventListener('ended', () => {
     if (!isAutoPlaying) return;
     if (idx < getTotalSteps() - 1) {
-      autoPlayTimer = setTimeout(() => playSyncedVoxScene(idx + 1), 650);
+      autoPlayTimer = setTimeout(() => playSyncedVoxScene(idx + 1), 850);
     } else {
       stopAutoPlay();
     }
