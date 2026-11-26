@@ -568,7 +568,7 @@ function playSyncedVoxScene(idx) {
   stopVoiceAudio();
   goToActiveStep(idx);
 
-  sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=3`);
+  sceneAudio = new Audio(`./audio/scene_${idx}.mp3?v=4`);
   btnDemoVoice.classList.add('active');
   btnDemoVoice.textContent = '⏹ Stop stemme';
 
