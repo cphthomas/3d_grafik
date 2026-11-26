@@ -70,8 +70,8 @@ html, body {
   position: relative;
   width: 100%;
   height: 100%;
-  background: #f4f1ea;
-  color: #111317;
+  background: #f3f1ea;
+  color: #14171a;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -81,22 +81,22 @@ html, body {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(17, 19, 23, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(17, 19, 23, 0.045) 1px, transparent 1px);
-  background-size: 36px 36px;
+    linear-gradient(rgba(20, 23, 26, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 23, 26, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
   pointer-events: none;
 }
 
 .vox-top-strip {
   position: relative;
   z-index: 5;
-  height: 8.5cqh;
-  padding: 0 3.2cqw;
+  height: 7.5cqh;
+  padding: 0 3.4cqw;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #111317;
-  background: rgba(244, 241, 234, 0.94);
+  border-bottom: 1px solid rgba(20, 23, 26, 0.14);
+  background: rgba(243, 241, 234, 0.92);
   flex-shrink: 0;
 }
 
@@ -176,37 +176,39 @@ html, body {
   display: inline-block;
   align-self: flex-start;
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(9px, 1.05cqw, 16px);
+  font-size: clamp(9px, 1.05cqw, 15px);
   font-weight: 800;
-  letter-spacing: 0.1em;
-  background: #111317;
-  color: #f5c518;
-  padding: 0.55cqh 1cqw;
-  margin-bottom: 1.6cqh;
+  letter-spacing: 0.12em;
+  background: transparent;
+  color: #dc2626;
+  padding: 0;
+  margin-bottom: 1.1cqh;
 }
 
 .vx-mega-title {
   margin: 0 0 1.6cqh;
-  font-size: clamp(22px, 4.7cqw, 74px);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(26px, 5.1cqw, 78px);
   font-weight: 900;
   line-height: 1.04;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   color: #111317;
 }
 
 .vx-title {
   margin: 0 0 2.2cqh;
-  font-size: clamp(18px, 3.2cqw, 52px);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(20px, 3.6cqw, 56px);
   font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
   color: #111317;
 }
 
 .vx-hl-wrap {
   position: relative;
   display: inline-block;
-  padding: 0 0.45cqw;
+  padding: 0 0.5cqw;
 }
 
 .vx-hl-txt {
@@ -218,9 +220,9 @@ html, body {
   position: absolute;
   left: 0;
   right: 0;
+  top: 8%;
   bottom: 4%;
-  height: 44%;
-  background: #f5c518;
+  background: #f7e81b;
   transform-origin: left center;
   z-index: 1;
 }
@@ -1175,6 +1177,34 @@ html, body {
   width: 10px;
   height: 10px;
   margin-right: 6px;
+}
+
+/* --- AUTENTISK VOX REDAKTIONEL PAPIR-FINISH (tynde 1px rammer, bløde skygger & let papir-tilt) --- */
+.vx-interactive-box,
+.vx-browser-frame,
+.vx-wheel-card,
+.vx-metro-board,
+.vx-ola-card,
+.vx-clock-card,
+.vx-es-row {
+  border: 1px solid #262b33;
+  box-shadow: 0 14px 32px rgba(20, 23, 26, 0.1), 0 2px 6px rgba(20, 23, 26, 0.06);
+}
+
+.vx-ola-card:nth-child(1) { transform: rotate(-0.8deg); border-left: 5px solid #9333ea; }
+.vx-ola-card:nth-child(2) { transform: rotate(0.55deg); border-left: 5px solid #059669; }
+.vx-ola-card:nth-child(3) { transform: rotate(-0.65deg); border-left: 5px solid #eab308; }
+.vx-ola-card:hover { transform: rotate(0deg) translateY(-4px); }
+
+.vx-interactive-box { transform: rotate(-0.35deg); border-left: 5px solid #f7e81b; }
+.vx-metro-board { transform: rotate(0.3deg); border-left: 5px solid #002e6d; }
+.vx-clock-card { transform: rotate(0.6deg); border-top: 5px solid #f7e81b; }
+.vx-week-pill { background: #f7e81b; color: #111317; }
+.vx-cta-btn {
+  background: #14171a;
+  color: #f7e81b;
+  border: 1px solid #14171a;
+  box-shadow: 0 8px 20px rgba(20, 23, 26, 0.18);
 }
 
 /* =========================================================
