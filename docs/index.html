@@ -7,16 +7,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&family=Playfair+Display:wght@700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-CtqdepX_.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-B_1uBybh.css">
+    <script type="module" crossorigin src="./assets/index-BSmnJqr7.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-GU3zyhJn.css">
   </head>
   <body>
     <div id="stage-shell">
       <div id="stage-16x9">
-        <!-- Tilstand 1 (Standard): Ægte Vox-style Explainer -->
+        <!-- Tilstand 1 (Standard): Ægte Vox-style Explainer Film -->
         <div id="vox-layer" class="stage-layer active"></div>
 
         <!-- Tilstand 2: Autentisk Moodle F27 med 3D-zoom & Mickey-pegefinger -->
@@ -27,10 +27,21 @@
           <canvas id="gl-canvas"></canvas>
           <canvas id="hud-canvas"></canvas>
         </div>
+
+        <!-- Ren Vox video-afspiller i bunden af 16:9-rammen -->
+        <div class="vox-player-bar" id="vox-player-bar">
+          <button id="vp-play" class="vp-btn" title="Afspil / Pause (Space)">▶</button>
+          <span id="vp-time" class="vp-time">00:00</span>
+          <div class="vp-scrubber" id="vp-scrubber" title="Klik for at hoppe i filmen">
+            <div class="vp-scrubber-fill" id="vp-scrubber-fill"></div>
+          </div>
+          <span id="vp-duration" class="vp-time">01:02</span>
+          <button id="vp-mute" class="vp-btn" title="Lyd til/fra">🔊</button>
+        </div>
       </div>
 
-      <!-- Kontrolpanel (skjules automatisk ved optagelse eller tast 'H') -->
-      <div id="controls" class="controls-bar">
+      <!-- Lærerkontrolpanel (skjult som standard — tryk 'H' for at vise optage-/lærerknapper) -->
+      <div id="controls" class="controls-bar hidden">
         <div class="controls-left">
           <button id="btn-mode" class="ctrl-btn ctrl-btn-mode" title="Skift mellem Vox Explainer, Moodle og 3D (M)">
             Vox → Moodle
@@ -50,8 +61,8 @@
             <option value="default">🎤 Standard mikrofon</option>
           </select>
           <button id="btn-mic" class="ctrl-btn active" title="Slå mikrofon til/fra i optagelsen">🎤 TIL</button>
-          <button id="btn-demo-voice" class="ctrl-btn" title="Afspil dansk stemmedemo (manuelt klik)">
-            🔊 Stemmedemo
+          <button id="btn-demo-voice" class="ctrl-btn" title="Afspil hele filmen med dansk stemme">
+            🔊 Afspil med stemme
           </button>
           <button id="btn-rec-4k" class="ctrl-btn ctrl-btn-rec" title="Optag video + din stemme direkte (R)">
             ● Optag 4K + Lyd

@@ -313,6 +313,10 @@ voxCtrl.onStepChange((idx, total) => {
   if (activeMode === 'vox') updateStepUi(idx, total);
 });
 
+voxCtrl.onRequestPlay(() => {
+  if (!isAutoPlaying) toggleAutoPlay(true);
+});
+
 moodleCtrl.onStepChange((idx, total) => {
   if (activeMode === 'moodle') updateStepUi(idx, total);
 });
@@ -733,14 +737,71 @@ function animate() {
   }
 }
 
-// Hvis siden åbnes med ?student=1 (til Moodle-studerende), skjul optage-/lærerknapper
+// --- REN VOX VIDEO-AFSPILLER (PLAY / PAUSE + TIDSLINJE-SCRUBBER) ---
+const vpBar = document.getElementById('vox-player-bar');
+const vpPlay = document.getElementById('vp-play');
+const vpTime = document.getElementById('vp-time');
+const vpScrubber = document.getElementById('vp-scrubber');
+const vpFill = document.getElementById('vp-scrubber-fill');
+const vpMute = document.getElementById('vp-mute');
+let isMuted = false;
+
+function formatSec(s) {
+  const m = Math.floor(s / 60);
+  const r = Math.floor(s % 60);
+  return `${String(m).padStart(2, '0')}:${String(r).padStart(2, '0')}`;
+}
+
+function updatePlayerProgress(idx, sceneFrac = 0) {
+  const total = getTotalSteps();
+  const pct = Math.min(100, Math.max(0, ((idx + sceneFrac) / total) * 100));
+  vpFill.style.width = `${pct}%`;
+  vpTime.textContent = formatSec(Math.round((pct / 100) * 62));
+  vpPlay.textContent = isAutoPlaying ? '⏸' : '▶';
+}
+
+vpPlay.addEventListener('click', () => {
+  if (activeMode !== 'vox') setMode('vox');
+  toggleAutoPlay(true);
+  updatePlayerProgress(getCurrentStep(), 0);
+  vpPlay.blur();
+});
+
+vpMute.addEventListener('click', () => {
+  isMuted = !isMuted;
+  if (sceneAudio) sceneAudio.muted = isMuted;
+  vpMute.textContent = isMuted ? '🔇' : '🔊';
+  vpMute.blur();
+});
+
+vpScrubber.addEventListener('click', (e) => {
+  const r = vpScrubber.getBoundingClientRect();
+  const ratio = Math.min(0.999, Math.max(0, (e.clientX - r.left) / r.width));
+  const targetIdx = Math.floor(ratio * getTotalSteps());
+  if (isAutoPlaying && activeMode === 'vox') {
+    playSyncedVoxScene(targetIdx);
+  } else {
+    goToActiveStep(targetIdx);
+    updatePlayerProgress(targetIdx, 0);
+  }
+});
+
+// Opdatér video-scrubber løbende — vis kun afspillerbaren når filmen faktisk er startet (eller forbi forside)
+setInterval(() => {
+  const showBar = activeMode === 'vox' && (isAutoPlaying || getCurrentStep() > 0);
+  if (showBar) {
+    vpBar.style.display = 'flex';
+    const frac = sceneAudio && sceneAudio.duration ? sceneAudio.currentTime / sceneAudio.duration : 0;
+    updatePlayerProgress(getCurrentStep(), isAutoPlaying ? frac : 0);
+  } else {
+    vpBar.style.display = 'none';
+  }
+}, 200);
+
+// Hvis siden åbnes med ?student=1 (til Moodle-studerende), vis KUN den rene Vox film-afspiller (ingen PowerPoint-knapper!)
 const isStudentEmbed = new URLSearchParams(window.location.search).get('student') === '1';
 if (isStudentEmbed) {
-  btnMode.style.display = 'none';
-  micSelect.style.display = 'none';
-  btnMic.style.display = 'none';
-  btnRec4k.style.display = 'none';
-  btnHide.style.display = 'none';
+  controlsEl.style.display = 'none';
 }
 
 // Start i den nye Vox-style Explainer!

@@ -86,6 +86,7 @@ export function initVoxExplainer(container) {
 
   let currentStep = 0;
   let onStepChangeCb = null;
+  let onRequestPlayCb = null;
   let activeTimeline = null;
   let cleanupFns = [];
 
@@ -115,6 +116,35 @@ export function initVoxExplainer(container) {
     const tl = gsap.timeline();
     activeTimeline = tl;
 
+    // Dramatisk 3D-kameraindflyvning + filmisk zoom/pan (aldrig fladt PowerPoint-kamera!)
+    gsap.killTweensOf(canvasEl);
+    const dir = idx % 2 === 0 ? 1 : -1;
+    gsap.fromTo(
+      canvasEl,
+      { scale: 0.92, rotationY: dir * 7, rotationX: 2.5, x: dir * -24, opacity: 0.25 },
+      {
+        scale: 1.04,
+        rotationY: dir * -3.5,
+        rotationX: -1.2,
+        x: dir * 16,
+        opacity: 1,
+        duration: 0.75,
+        ease: 'power3.out',
+        onComplete: () => {
+          // Kontinuerlig dokumentar-kamerakørsel gennem hele scenen
+          gsap.to(canvasEl, {
+            scale: 1.11,
+            rotationY: dir * 3.8,
+            rotationX: 1.6,
+            x: dir * -14,
+            y: -8,
+            duration: 7.5,
+            ease: 'sine.inOut'
+          });
+        }
+      }
+    );
+
     if (idx === 0) {
       // SCENE 1: INTERAKTIV 3D-VIFTE AF MOODLE-TILES + PARALLAX
       canvasEl.innerHTML = `
@@ -126,7 +156,7 @@ export function initVoxExplainer(container) {
               <span class="vx-hl-wrap"><span class="vx-hl-txt">på ét minut</span><i class="vx-hl-bg"></i></span>
             </h1>
             <p class="vx-lead">Klik, træk og udforsk hvordan online-studiet fungerer — fra første tile i Moodle til den mundtlige prøve.</p>
-            <button class="vx-cta-btn" id="vx-start-btn">Start turen →</button>
+            <button class="vx-cta-btn vx-cta-hero" id="vx-start-btn">▶ Start turen (med lyd)</button>
           </div>
           <div class="vx-hero-fan" id="vx-hero-fan">
             <div class="vx-fan-card" style="--i:-1.5"><img src="./moodle/tile_02.jpg" alt="" /><span>Introprogram</span></div>
@@ -153,11 +183,26 @@ export function initVoxExplainer(container) {
       fan.addEventListener('mousemove', onMove);
       cleanupFns.push(() => fan.removeEventListener('mousemove', onMove));
 
-      canvasEl.querySelector('#vx-start-btn').addEventListener('click', () => goToStep(1));
+      canvasEl.querySelector('#vx-start-btn').addEventListener('click', () => {
+        if (onRequestPlayCb) onRequestPlayCb();
+        else goToStep(1);
+      });
 
       tl.from('.vx-hero-left > *', { y: 20, opacity: 0, stagger: 0.08, duration: 0.45, ease: 'power3.out' })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power3.out' }, '-=0.25')
-        .from('.vx-fan-card', { y: 40, opacity: 0, rotation: 0, stagger: 0.1, duration: 0.55, ease: 'back.out(1.3)' }, '-=0.35');
+        .from('.vx-fan-card', { y: 40, opacity: 0, rotation: 0, stagger: 0.1, duration: 0.55, ease: 'back.out(1.3)' }, '-=0.35')
+        .call(() => {
+          // Levende, kontinuerlig 3D-svæven på de 4 Moodle-tiles allerede på forsiden!
+          gsap.to(fan.querySelectorAll('.vx-fan-card'), {
+            y: (i) => (i % 2 === 0 ? -10 : 10),
+            rotation: (i) => (i - 1.5) * 8,
+            duration: 2.4,
+            stagger: 0.18,
+            yoyo: true,
+            repeat: -1,
+            ease: 'sine.inOut'
+          });
+        });
     } else if (idx === 1) {
       // SCENE 2: INTERAKTIV SEMESTER-SLIDER (TRÆK FRA UGE 1 TIL 15)
       canvasEl.innerHTML = `
@@ -245,15 +290,15 @@ export function initVoxExplainer(container) {
       rangeEl.addEventListener('input', (e) => updateWeek(Number(e.target.value)));
       updateWeek(1);
 
-      // Blød intro-animation der lige viser slideren i bevægelse op til uge 4
+      // Automatisk filmisk gennemløb gennem alle 15 uger (kan også trækkes manuelt)
       const demoObj = { w: 1 };
       tl.from('.vx-kicker, .vx-title, .vx-interactive-box', { y: 18, opacity: 0, stagger: 0.08, duration: 0.42 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
         .to(demoObj, {
-          w: 4,
-          duration: 1.4,
-          delay: 0.3,
-          ease: 'power2.inOut',
+          w: 15,
+          duration: 6.2,
+          delay: 0.25,
+          ease: 'none',
           onUpdate: () => {
             const v = Math.round(demoObj.w);
             rangeEl.value = String(v);
@@ -335,7 +380,9 @@ export function initVoxExplainer(container) {
       tl.from('.vx-map-left > *', { x: -20, opacity: 0, stagger: 0.08, duration: 0.42 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.22')
         .from('.vx-browser-frame', { scale: 0.94, opacity: 0, duration: 0.45 }, '-=0.25')
-        .call(() => setTimeout(unlockNext, 900));
+        .call(unlockNext, null, '+=0.6')
+        .call(unlockNext, null, '+=1.4')
+        .call(unlockNext, null, '+=1.4');
     } else if (idx === 3) {
       // SCENE 4: INTERAKTIVT UGE-HJUL (KLIK PÅ DAGENE I RYTMEN)
       const wheelSteps = [
@@ -393,7 +440,12 @@ export function initVoxExplainer(container) {
 
       tl.from('.vx-wheel-left > *', { x: -18, opacity: 0, stagger: 0.08, duration: 0.4 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-        .from('.vx-orbit-node', { scale: 0.7, opacity: 0, stagger: 0.1, duration: 0.42, ease: 'back.out(1.4)' }, '-=0.25');
+        .from('.vx-orbit-node', { scale: 0.7, opacity: 0, stagger: 0.1, duration: 0.42, ease: 'back.out(1.4)' }, '-=0.25')
+        // Automatisk film-skift gennem alle 4 trin i uge-hjulet!
+        .call(() => selectWheel(0), null, '+=0.2')
+        .call(() => selectWheel(1), null, '+=1.6')
+        .call(() => selectWheel(2), null, '+=1.8')
+        .call(() => selectWheel(3), null, '+=1.8');
     } else if (idx === 4) {
       // SCENE 5: INTERAKTIVT METRO-KORT OVER DE 5 FAGOMRÅDER (INGEN BARCHARTS!)
       const pathD = `M ${METRO_STATIONS[0].x} ${METRO_STATIONS[0].y} ` +
@@ -454,7 +506,13 @@ export function initVoxExplainer(container) {
       tl.from('.vx-kicker, .vx-title', { y: 16, opacity: 0, stagger: 0.08, duration: 0.4 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
         .fromTo(line, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut' }, '-=0.15')
-        .from('.vx-station', { scale: 0.5, opacity: 0, stagger: 0.1, duration: 0.4, ease: 'back.out(1.5)' }, '-=0.85');
+        .from('.vx-station', { scale: 0.5, opacity: 0, stagger: 0.1, duration: 0.4, ease: 'back.out(1.5)' }, '-=0.85')
+        // Automatisk film-kørsel langs alle 5 stationer i takt med talen!
+        .call(() => selectStation(0), null, '+=0.15')
+        .call(() => selectStation(1), null, '+=1.35')
+        .call(() => selectStation(2), null, '+=1.35')
+        .call(() => selectStation(3), null, '+=1.35')
+        .call(() => selectStation(4), null, '+=1.35');
     } else if (idx === 5) {
       // SCENE 6: INTERAKTIV OLA-STEMPEL-MASKINE (KLIK FOR AT STEMPLE GODKENDT!)
       canvasEl.innerHTML = `
@@ -507,7 +565,9 @@ export function initVoxExplainer(container) {
       tl.from('.vx-kicker, .vx-title', { y: 16, opacity: 0, stagger: 0.08, duration: 0.4 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
         .from('.vx-ola-btn', { y: 24, opacity: 0, stagger: 0.12, duration: 0.45, ease: 'back.out(1.2)' }, '-=0.15')
-        .call(() => setTimeout(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="1"]')), 650));
+        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="1"]')), null, '+=0.55')
+        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="2"]')), null, '+=1.2')
+        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="3"]')), null, '+=1.2');
     } else {
       // SCENE 7: ANIMERET 30-MINUTTERS EKSAMENS-UR
       canvasEl.innerHTML = `
@@ -564,6 +624,9 @@ export function initVoxExplainer(container) {
     getCurrentStep: () => currentStep,
     onStepChange(cb) {
       onStepChangeCb = cb;
+    },
+    onRequestPlay(cb) {
+      onRequestPlayCb = cb;
     }
   };
 }

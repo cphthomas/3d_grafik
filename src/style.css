@@ -12,7 +12,7 @@ html, body {
   overflow: hidden;
   background: #060911;
   color: #f8fafc;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   user-select: none;
 }
 
@@ -162,6 +162,8 @@ html, body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  perspective: 1100px;
+  transform-style: preserve-3d;
 }
 
 .vx-scene {
@@ -170,6 +172,8 @@ html, body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .vx-kicker {
@@ -187,21 +191,21 @@ html, body {
 
 .vx-mega-title {
   margin: 0 0 1.6cqh;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(26px, 5.1cqw, 78px);
-  font-weight: 900;
-  line-height: 1.04;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   color: #111317;
 }
 
 .vx-title {
   margin: 0 0 2.2cqh;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(20px, 3.6cqw, 56px);
-  font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
   color: #111317;
 }
 
@@ -1205,6 +1209,95 @@ html, body {
   color: #f7e81b;
   border: 1px solid #14171a;
   box-shadow: 0 8px 20px rgba(20, 23, 26, 0.18);
+}
+
+.vx-cta-hero {
+  background: #f7e81b;
+  color: #111317;
+  border: 2px solid #111317;
+  padding: 1.8cqh 2.8cqw;
+  font-size: clamp(13px, 1.75cqw, 25px);
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  box-shadow: 0.45cqw 0.45cqw 0 #111317;
+  animation: heroCtaPulse 2s ease-in-out infinite;
+}
+
+.vx-cta-hero:hover {
+  background: #111317;
+  color: #f7e81b;
+  animation: none;
+}
+
+@keyframes heroCtaPulse {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0.45cqw 0.45cqw 0 #111317;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.035);
+    box-shadow: 0.65cqw 0.75cqw 0 #111317, 0 0 24px rgba(247, 232, 27, 0.65);
+  }
+}
+
+/* Ren Vox video-afspillerbar i bunden af 16:9-rammen */
+.vox-player-bar {
+  position: absolute;
+  left: 3.2cqw;
+  right: 3.2cqw;
+  bottom: 2.2cqh;
+  height: 6.4cqh;
+  min-height: 36px;
+  background: rgba(20, 23, 26, 0.78);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 1.4cqw;
+  padding: 0 1.6cqw;
+  z-index: 55;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.vp-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: clamp(13px, 1.5cqw, 20px);
+  cursor: pointer;
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vp-btn:hover {
+  color: #f7e81b;
+}
+
+.vp-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(10px, 1.05cqw, 14px);
+  font-weight: 700;
+  color: #e2e8f0;
+  min-width: 40px;
+  text-align: center;
+}
+
+.vp-scrubber {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  position: relative;
+}
+
+.vp-scrubber-fill {
+  height: 100%;
+  width: 0%;
+  background: #f7e81b;
+  transition: width 0.25s linear;
 }
 
 /* =========================================================
