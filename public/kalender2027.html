@@ -18,15 +18,15 @@
       --ek-navy: #0a2540;
       --ek-yellow: #facc15;
       --c-thu: #dc2626;
-      --c-thu-bg: #fef2f2;
+      --c-thu-bg: #fee2e2;
       --c-tue: #1d4ed8;
-      --c-tue-bg: #eff6ff;
+      --c-tue-bg: #dbeafe;
       --c-ola: #eab308;
-      --c-ola-bg: #fef9c3;
+      --c-ola-bg: #fef08a;
       --c-exam: #7c3aed;
-      --c-exam-bg: #f5f3ff;
+      --c-exam-bg: #ede9fe;
       --c-hol: #0f766e;
-      --c-hol-bg: #ecfdf5;
+      --c-hol-bg: #ccfbf1;
     }
 
     *, *::before, *::after {
@@ -37,62 +37,57 @@
     html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
       background-color: var(--bg);
       background-image:
-        linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
-      background-size: 28px 28px;
+        linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
       color: var(--ink);
       font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
-    .page {
-      max-width: 1480px;
-      margin: 0 auto;
-      padding: 20px 24px 36px;
-    }
-
-    /* ENTRANCE ANIMATION */
     @keyframes riseIn {
-      from {
-        opacity: 0;
-        transform: translateY(14px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes popTooltip {
-      from {
-        opacity: 0;
-        transform: translateY(6px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+      from { opacity: 0; transform: translateY(5px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* TOP HEADER */
+    /* SINGLE-SCREEN VIEWPORT SHELL */
+    .shell {
+      height: 100vh;
+      max-width: 1680px;
+      margin: 0 auto;
+      padding: 10px 14px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    /* COMPACT TOPBAR */
     .topbar {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      padding-bottom: 14px;
-      border-bottom: 3px solid var(--line-strong);
-      margin-bottom: 16px;
+      gap: 10px;
+      padding: 7px 12px;
+      background: var(--paper);
+      border: 2px solid var(--line-strong);
+      box-shadow: 3px 3px 0 var(--line-strong);
+      flex-shrink: 0;
     }
 
-    .brand-block {
+    .brand-left {
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 10px;
+      min-width: 0;
     }
 
     .ek-badge {
@@ -100,53 +95,78 @@
       color: var(--ek-yellow);
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
-      font-size: 16px;
+      font-size: 14px;
       letter-spacing: 0.08em;
-      padding: 5px 11px;
+      padding: 4px 9px;
       border: 2px solid var(--line-strong);
+      flex-shrink: 0;
     }
 
-    .brand-meta {
+    .title-group {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .main-title {
+      margin: 0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .main-title mark {
+      background: var(--ek-yellow);
+      color: var(--ink);
+      padding: 0 5px;
+      box-shadow: inset 0 -2px 0 var(--line-strong);
+    }
+
+    .meta-inline {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.08em;
       color: var(--muted);
-      text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .top-actions {
       display: flex;
       align-items: center;
-      gap: 9px;
-      flex-wrap: wrap;
+      gap: 7px;
+      flex-shrink: 0;
     }
 
     .btn-action {
       appearance: none;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       background: var(--paper);
       color: var(--ink);
       border: 2px solid var(--line-strong);
-      padding: 8px 13px;
+      padding: 5px 10px;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 3px 3px 0 var(--line-strong);
-      transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.12s ease, background 0.14s ease;
+      box-shadow: 2px 2px 0 var(--line-strong);
+      transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.12s ease, background 0.12s ease;
+      white-space: nowrap;
     }
 
     .btn-action:hover {
       background: #f1f5f9;
-      transform: translate(-1.5px, -1.5px);
-      box-shadow: 4.5px 4.5px 0 var(--line-strong);
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0 var(--line-strong);
     }
 
     .btn-action:active {
-      transform: translate(1.5px, 1.5px);
+      transform: translate(1px, 1px);
       box-shadow: 1px 1px 0 var(--line-strong);
     }
 
@@ -160,279 +180,45 @@
     }
 
     .btn-action svg {
-      width: 15px;
-      height: 15px;
+      width: 13px;
+      height: 13px;
       flex-shrink: 0;
     }
 
-    /* HERO ROW */
-    .hero {
-      display: grid;
-      grid-template-columns: 1.32fr 1fr;
-      gap: 16px;
-      align-items: stretch;
-      margin-bottom: 16px;
-      animation: riseIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .hero-left {
-      background: var(--paper);
-      border: 2px solid var(--line-strong);
-      box-shadow: 5px 5px 0 var(--line-strong);
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .hero-kicker {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--c-thu);
-      text-transform: uppercase;
-    }
-
-    .hero-title {
-      margin: 4px 0 6px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(24px, 2.7vw, 35px);
-      line-height: 1.08;
-      letter-spacing: -0.025em;
-    }
-
-    .hero-title mark {
-      background: var(--ek-yellow);
-      color: var(--ink);
-      padding: 0 6px;
-      box-shadow: inset 0 -3px 0 var(--line-strong);
-    }
-
-    .hero-sub {
-      margin: 0;
-      font-size: 13.5px;
-      color: var(--muted);
-      line-height: 1.48;
-    }
-
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border: 2px solid var(--line-strong);
-      background: var(--ek-navy);
-      color: #ffffff;
-    }
-
-    .stat-cell {
-      padding: 8px 10px;
-      border-right: 1px solid rgba(255, 255, 255, 0.22);
-    }
-
-    .stat-cell:last-child {
-      border-right: none;
-    }
-
-    .stat-num {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--ek-yellow);
-      line-height: 1.1;
-    }
-
-    .stat-lbl {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.85);
-      margin-top: 2px;
-    }
-
-    /* LIVE DETAIL INSPECTOR */
-    .detail-box {
-      background: var(--paper);
-      border: 2px solid var(--line-strong);
-      box-shadow: 5px 5px 0 var(--line-strong);
-      padding: 15px 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .detail-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      border-bottom: 2px solid var(--line-strong);
-      padding-bottom: 8px;
-    }
-
-    .detail-date {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--ek-navy);
-    }
-
-    .detail-pills {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-
-    .detail-week-pill {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 7px;
-      background: var(--ek-navy);
-      color: var(--ek-yellow);
-    }
-
-    .detail-study-pill {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 7px;
-      background: var(--ek-yellow);
-      color: var(--ink);
-      border: 1px solid var(--ink);
-    }
-
-    .study-progress-wrap {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 700;
-      color: var(--ek-navy);
-    }
-
-    .study-progress-wrap.is-visible {
-      display: flex;
-    }
-
-    .study-progress-track {
-      flex: 1;
-      height: 8px;
-      background: #e2e8f0;
-      border: 1px solid var(--ink);
-      overflow: hidden;
-    }
-
-    .study-progress-fill {
-      height: 100%;
-      background: var(--ek-navy);
-      width: 0%;
-      transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .detail-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      min-height: 84px;
-    }
-
-    .detail-item {
-      border-left: 4px solid var(--line-strong);
-      padding: 7px 10px;
-      background: #f8fafc;
-      transition: transform 0.15s ease;
-    }
-
-    .detail-item.cat-thu { border-left-color: var(--c-thu); background: var(--c-thu-bg); }
-    .detail-item.cat-tue { border-left-color: var(--c-tue); background: var(--c-tue-bg); }
-    .detail-item.cat-ola { border-left-color: var(--c-ola); background: var(--c-ola-bg); }
-    .detail-item.cat-exam { border-left-color: var(--c-exam); background: var(--c-exam-bg); }
-    .detail-item.cat-hol { border-left-color: var(--c-hol); background: var(--c-hol-bg); }
-
-    .detail-item-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 13.5px;
-    }
-
-    .detail-topic {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 700;
-      color: var(--ek-navy);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-top: 2px;
-    }
-
-    .detail-time {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 1px 6px;
-      background: var(--ink);
-      color: #fff;
-      white-space: nowrap;
-    }
-
-    .detail-desc {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
-      line-height: 1.38;
-    }
-
-    .detail-hint {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10.5px;
-      color: var(--muted);
-    }
-
-    /* FILTER LEGEND BAR */
+    /* COMPACT LEGEND / FILTER BAR */
     .legend-bar {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
-      margin-bottom: 16px;
-      padding: 10px 12px;
+      padding: 5px 10px;
       background: var(--paper);
       border: 2px solid var(--line-strong);
-      animation: riseIn 0.45s 0.06s cubic-bezier(0.22, 1, 0.36, 1) both;
+      flex-shrink: 0;
+      flex-wrap: wrap;
     }
 
-    .legend-title {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-right: 4px;
+    .legend-filters {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
     .filter-btn {
       appearance: none;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 5px 10px;
+      gap: 5px;
+      padding: 3px 8px;
       border: 1.5px solid var(--line-strong);
       background: #ffffff;
       color: var(--ink);
       font-family: 'IBM Plex Sans', sans-serif;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       cursor: pointer;
-      transition: background 0.14s ease, color 0.14s ease, transform 0.12s ease;
+      transition: background 0.12s ease, color 0.12s ease, transform 0.1s ease;
     }
 
     .filter-btn:hover {
@@ -446,8 +232,8 @@
     }
 
     .swatch {
-      width: 11px;
-      height: 11px;
+      width: 9px;
+      height: 9px;
       display: inline-block;
       border: 1px solid var(--ink);
       flex-shrink: 0;
@@ -459,63 +245,83 @@
     .sw-exam { background: var(--c-exam); }
     .sw-hol { background: var(--c-hol); }
 
-    /* 6-MONTH GRID */
+    .hover-hint {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--ek-navy);
+      white-space: nowrap;
+    }
+
+    /* MAIN 3x2 MONTHS GRID — FILLS REMAINING VIEWPORT */
     .months-grid {
+      flex: 1;
+      min-height: 0;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 18px;
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
     }
 
     .month-card {
       background: var(--paper);
       border: 2px solid var(--line-strong);
-      box-shadow: 4px 4px 0 var(--line-strong);
+      box-shadow: 3px 3px 0 var(--line-strong);
       display: flex;
       flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
       opacity: 0;
-      animation: riseIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: riseIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .month-header {
       background: var(--ek-navy);
       color: #ffffff;
-      padding: 10px 12px;
+      padding: 5px 9px;
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
       border-bottom: 2px solid var(--line-strong);
+      flex-shrink: 0;
     }
 
     .month-name {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 17px;
+      font-size: 13.5px;
       font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .month-focus {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10.5px;
+      font-size: 9.5px;
       color: var(--ek-yellow);
       text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .cal-table {
       width: 100%;
+      flex: 1;
+      height: 100%;
       border-collapse: collapse;
       table-layout: fixed;
     }
 
-    .cal-table th {
+    .cal-table thead th {
+      height: 20px;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 6px 2px;
+      letter-spacing: 0.05em;
+      padding: 2px;
       background: #f1f5f9;
       color: var(--muted);
       border-bottom: 1.5px solid var(--line-strong);
@@ -523,63 +329,57 @@
       text-align: center;
     }
 
-    .cal-table th:first-child {
-      width: 40px;
+    .cal-table thead th:first-child {
+      width: 34px;
       background: #e2e8f0;
       color: var(--ink);
     }
 
-    .cal-table th:last-child {
+    .cal-table thead th:last-child {
       border-right: none;
     }
 
-    .cal-table tr {
-      transition: background 0.14s ease;
-    }
-
-    .cal-table tr.is-row-hover td.wk-col {
-      background: var(--ek-navy) !important;
-      color: var(--ek-yellow) !important;
-    }
-
-    .cal-table td {
-      height: 55px;
+    .cal-table tbody td {
       vertical-align: top;
       border-bottom: 1px solid var(--line);
       border-right: 1px solid var(--line);
-      padding: 3px 3px 2px;
+      padding: 2px 3px 1px;
       position: relative;
       background: #ffffff;
-      transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), background 0.14s ease, opacity 0.18s ease, box-shadow 0.15s ease;
+      transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1), background 0.12s ease, opacity 0.15s ease, box-shadow 0.14s ease;
     }
 
-    .cal-table tr:last-child td {
+    .cal-table tbody tr:last-child td {
       border-bottom: none;
     }
 
-    .cal-table td:last-child {
+    .cal-table tbody td:last-child {
       border-right: none;
+    }
+
+    .cal-table tbody tr.is-row-hover td.wk-col {
+      background: var(--ek-navy) !important;
+      color: var(--ek-yellow) !important;
     }
 
     .cal-table td.wk-col {
       background: #f8fafc;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9.5px;
+      font-size: 8.5px;
       font-weight: 700;
       color: var(--muted);
       text-align: center;
       vertical-align: middle;
       border-right: 1.5px solid var(--line-strong);
-      padding: 2px;
-      line-height: 1.15;
+      padding: 1px;
+      line-height: 1.05;
     }
 
     .cal-table td.wk-col .wk-sub {
       display: block;
-      font-size: 8px;
+      font-size: 7.5px;
       font-weight: 600;
-      opacity: 0.8;
-      margin-top: 1px;
+      opacity: 0.85;
     }
 
     .cal-table td.wk-col.is-study {
@@ -604,15 +404,21 @@
       background: repeating-linear-gradient(
         -45deg,
         #ecfdf5,
-        #ecfdf5 5px,
-        #d1fae5 5px,
-        #d1fae5 10px
+        #ecfdf5 4px,
+        #ccfbf1 4px,
+        #ccfbf1 8px
       );
     }
 
     .cal-table td.is-project-day {
       background: #faf5ff;
     }
+
+    /* COLOR-CODED CELL TINTS FOR INSTANT SCANNING */
+    .cal-table td.tint-thu { background: #fff5f5; }
+    .cal-table td.tint-tue { background: #f0f7ff; }
+    .cal-table td.tint-ola { background: #fef9c3; }
+    .cal-table td.tint-exam { background: #f3e8ff; }
 
     .cal-table td.has-events {
       cursor: pointer;
@@ -621,91 +427,137 @@
     .cal-table td.has-events:hover {
       outline: 2px solid var(--ink);
       outline-offset: -2px;
-      background: #fefce8;
-      transform: translateY(-2px) scale(1.03);
-      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.16);
-      z-index: 6;
+      background: #fef08a !important;
+      transform: scale(1.06);
+      box-shadow: 0 5px 12px rgba(15, 23, 42, 0.22);
+      z-index: 10;
     }
 
-    .cal-table td.is-selected {
+    .cal-table td.is-highlighted {
       outline: 2.5px solid var(--ink);
       outline-offset: -2px;
-      background: #fef9c3 !important;
-      z-index: 4;
+      background: #fde047 !important;
+      z-index: 8;
     }
 
     .cal-table td.is-dimmed {
-      opacity: 0.22;
-    }
-
-    .day-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 2px;
+      opacity: 0.18;
     }
 
     .day-num {
+      display: block;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      font-weight: 600;
+      font-size: 9.5px;
+      font-weight: 700;
       color: var(--ink);
-      line-height: 1;
+      line-height: 1.05;
+      margin-bottom: 1px;
     }
 
     .cal-table td.is-weekend .day-num {
       color: #94a3b8;
+      font-weight: 500;
     }
 
-    .day-badges {
+    .day-tags {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 1px;
     }
 
-    .ev-tag {
+    .ev-pill {
       display: block;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 8.5px;
+      font-size: 7.5px;
       font-weight: 700;
       line-height: 1.15;
-      padding: 1.5px 3px;
-      letter-spacing: 0.01em;
+      padding: 1px 2px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       border-left: 2.5px solid transparent;
     }
 
-    .ev-tag.cat-thu {
+    .ev-pill.cat-thu {
       background: var(--c-thu-bg);
       color: #991b1b;
       border-left-color: var(--c-thu);
     }
 
-    .ev-tag.cat-tue {
+    .ev-pill.cat-tue {
       background: var(--c-tue-bg);
       color: #1e3a8a;
       border-left-color: var(--c-tue);
     }
 
-    .ev-tag.cat-ola {
+    .ev-pill.cat-ola {
       background: var(--ek-yellow);
       color: var(--ink);
       border: 1px solid var(--ink);
-      border-left: 3px solid var(--ink);
+      border-left: 2.5px solid var(--ink);
     }
 
-    .ev-tag.cat-exam {
+    .ev-pill.cat-exam {
       background: var(--c-exam);
       color: #ffffff;
       border-left-color: var(--ek-yellow);
     }
 
-    .ev-tag.cat-hol {
+    .ev-pill.cat-hol {
       background: var(--c-hol-bg);
       color: #115e59;
       border-left-color: var(--c-hol);
+    }
+
+    /* COMPACT BOTTOM MILESTONE RIBBON */
+    .milestone-ribbon {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .ms-chip {
+      appearance: none;
+      text-align: left;
+      background: var(--paper);
+      border: 1.5px solid var(--line-strong);
+      border-top: 3.5px solid var(--ink);
+      padding: 4px 6px;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+      min-width: 0;
+    }
+
+    .ms-chip:hover {
+      background: #fef9c3;
+      transform: translateY(-2px);
+      box-shadow: 2px 2px 0 var(--line-strong);
+    }
+
+    .ms-chip.cat-hol { border-top-color: var(--c-hol); }
+    .ms-chip.cat-ola { border-top-color: var(--c-ola); background: #fefce8; }
+    .ms-chip.cat-exam { border-top-color: var(--c-exam); background: #faf5ff; }
+
+    .ms-d {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--ek-navy);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ms-t {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--ink);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* FLOATING HOVER POPOVER */
@@ -713,7 +565,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 315px;
+      width: 330px;
       background: var(--paper);
       border: 2px solid var(--line-strong);
       box-shadow: 6px 6px 0 var(--line-strong);
@@ -725,7 +577,7 @@
 
     .hover-card.is-open {
       display: block;
-      animation: popTooltip 0.16s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: popTooltip 0.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .hc-top {
@@ -740,7 +592,7 @@
 
     .hc-date {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--ek-navy);
     }
@@ -758,7 +610,7 @@
     .hc-study-bar {
       margin-bottom: 8px;
       background: #f1f5f9;
-      border: 1px solid var(--line-strong);
+      border: 1.5px solid var(--line-strong);
       padding: 5px 7px;
     }
 
@@ -792,8 +644,8 @@
     }
 
     .hc-item {
-      border-left: 3.5px solid var(--ink);
-      padding: 5px 7px;
+      border-left: 4px solid var(--ink);
+      padding: 6px 8px;
       background: #f8fafc;
     }
 
@@ -825,104 +677,22 @@
       line-height: 1.32;
     }
 
-    /* MILESTONE STRIP AT BOTTOM */
-    .milestones-section {
-      background: var(--paper);
-      border: 2px solid var(--line-strong);
-      box-shadow: 5px 5px 0 var(--line-strong);
-      padding: 14px 16px;
-    }
-
-    .milestones-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--line-strong);
-    }
-
-    .milestones-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .milestones-note {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .milestones-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-    }
-
-    .ms-card {
-      border: 1.5px solid var(--line-strong);
-      padding: 8px 9px;
-      background: #ffffff;
-      cursor: pointer;
-      transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1), background 0.14s ease, box-shadow 0.14s ease;
-      border-top: 4px solid var(--ink);
-    }
-
-    .ms-card:hover {
-      background: #fefce8;
-      transform: translate(-1px, -3px);
-      box-shadow: 3px 3px 0 var(--line-strong);
-    }
-
-    .ms-card.cat-hol { border-top-color: var(--c-hol); }
-    .ms-card.cat-ola { border-top-color: var(--c-ola); background: #fefce8; }
-    .ms-card.cat-exam { border-top-color: var(--c-exam); background: #faf5ff; }
-    .ms-card.cat-tue { border-top-color: var(--c-tue); }
-
-    .ms-date {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 10.5px;
-      font-weight: 700;
-      color: var(--ek-navy);
-      margin-bottom: 3px;
-    }
-
-    .ms-name {
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.25;
-      color: var(--ink);
-    }
-
-    .ms-sub {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
-      line-height: 1.25;
-    }
-
     /* TOAST FOR ICS DOWNLOAD */
     .toast {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
+      bottom: 18px;
+      right: 18px;
       background: var(--ek-navy);
       color: #ffffff;
       border: 2px solid var(--line-strong);
       box-shadow: 4px 4px 0 var(--line-strong);
-      padding: 11px 16px;
+      padding: 10px 14px;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 600;
       z-index: 1200;
       opacity: 0;
-      transform: translateY(12px);
+      transform: translateY(10px);
       pointer-events: none;
       transition: opacity 0.2s ease, transform 0.2s ease;
     }
@@ -936,73 +706,71 @@
       color: var(--ek-yellow);
     }
 
-    /* FOOTER */
-    .footer-note {
-      margin-top: 14px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
+    /* TABLET / MOBILE FALLBACK (ALLOW SCROLL ONLY BELOW 1020PX) */
+    @media (max-width: 1020px) {
+      .shell {
+        height: auto;
+        overflow: visible;
+      }
+      .months-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+      .cal-table tbody td {
+        height: 46px;
+      }
+      .milestone-ribbon {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
-    /* RESPONSIVE */
-    @media (max-width: 1180px) {
-      .months-grid { grid-template-columns: repeat(2, 1fr); }
-      .milestones-grid { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 680px) {
+      .months-grid {
+        grid-template-columns: 1fr;
+      }
+      .milestone-ribbon {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hover-hint {
+        display: none;
+      }
     }
 
-    @media (max-width: 820px) {
-      .hero { grid-template-columns: 1fr; }
-      .months-grid { grid-template-columns: 1fr; }
-      .milestones-grid { grid-template-columns: repeat(2, 1fr); }
-      .stats-strip { grid-template-columns: repeat(2, 1fr); }
-      .stat-cell { border-bottom: 1px solid rgba(255, 255, 255, 0.22); }
-      .hover-card { display: none !important; }
-    }
-
-    /* PRINT / PDF */
+    /* PRINT / A4 LANDSCAPE ONE-PAGER */
     @media print {
       @page {
         size: A4 landscape;
-        margin: 8mm;
+        margin: 6mm;
       }
-      body {
+      html, body {
         background: #ffffff !important;
+        height: 100%;
       }
-      .page {
+      .shell {
+        height: 100vh;
         padding: 0;
-        max-width: none;
+        gap: 6px;
       }
-      .top-actions, .detail-hint, .hover-card, .toast {
+      .top-actions, .hover-card, .toast {
         display: none !important;
       }
-      .hero-left, .detail-box, .month-card, .milestones-section {
+      .topbar, .month-card {
         box-shadow: none !important;
         opacity: 1 !important;
         animation: none !important;
-      }
-      .months-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 8px;
-      }
-      .cal-table td {
-        height: 40px;
-      }
-      .milestones-grid {
-        grid-template-columns: repeat(6, 1fr) !important;
       }
     }
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="shell">
     <header class="topbar">
-      <div class="brand-block">
+      <div class="brand-left">
         <span class="ek-badge">EK</span>
-        <span class="brand-meta">Finansøkonom (online) · 1. semester · Forår 2027</span>
+        <div class="title-group">
+          <h1 class="main-title">Semesterkalender <mark>2027</mark></h1>
+          <span class="meta-inline">Finansøkonom (online) · 1. sem. · 15 uger · 3 OLA · Påske uge 12 · Mundtlig 21.–22. jun</span>
+        </div>
       </div>
       <div class="top-actions">
         <button class="btn-action btn-ics" id="btn-ics" type="button" title="Download .ics-fil til Outlook, Google Kalender eller Apple Kalender">
@@ -1013,95 +781,33 @@
             <line x1="3" y1="10" x2="21" y2="10"></line>
             <path d="M12 13v6m0 0l-3-3m3 3l3-3"></path>
           </svg>
-          Hent kalender (.ics) — Outlook / Gmail
+          Hent .ics (Outlook / Gmail)
         </button>
-        <button class="btn-action" id="btn-reset" type="button">Vis alle</button>
         <button class="btn-action" id="btn-print" type="button">Udskriv / PDF</button>
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero-left">
-        <div>
-          <div class="hero-kicker">SEMESTEROVERSIGT · JANUAR – JUNI 2027</div>
-          <h1 class="hero-title">Alle frister frem til <mark>mundtlig eksamen</mark></h1>
-          <p class="hero-sub">
-            Fast uge-rytme gennem hele foråret: <strong>torsdag kl. 08.00</strong> (individuelle aktiviteter + næste uges tile åbner)
-            og <strong>tirsdag kl. 08.00</strong> ugen efter (teamets temaprojekt). Påskeferie i <strong>uge 12</strong> tæller ikke med i de 15 undervisningsuger.
-          </p>
-        </div>
-        <div class="stats-strip">
-          <div class="stat-cell">
-            <div class="stat-num">15 uger</div>
-            <div class="stat-lbl">Studieuge 1–15</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">3 OLA</div>
-            <div class="stat-lbl">9/3 · 4/5 · 25/5</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">Uge 12</div>
-            <div class="stat-lbl">Påskeferie (fri)</div>
-          </div>
-          <div class="stat-cell">
-            <div class="stat-num">21.–22. jun</div>
-            <div class="stat-lbl">Mundtlig eksamen</div>
-          </div>
-        </div>
-      </div>
-
-      <aside class="detail-box" id="detail-box" aria-live="polite">
-        <div>
-          <div class="detail-head">
-            <span class="detail-date" id="detail-date">Vælg en markeret dato</span>
-            <div class="detail-pills">
-              <span class="detail-study-pill" id="detail-study" style="display:none;"></span>
-              <span class="detail-week-pill" id="detail-week">F27</span>
-            </div>
-          </div>
-          <div class="study-progress-wrap" id="study-progress-wrap" style="margin-top:8px;">
-            <span id="study-progress-label">Studieuge 1 / 15</span>
-            <div class="study-progress-track">
-              <div class="study-progress-fill" id="study-progress-fill"></div>
-            </div>
-          </div>
-        </div>
-        <div class="detail-list" id="detail-list"></div>
-        <div class="detail-hint">Kør musen hen over enhver markeret dato for at se emne, studieuge (af 15) og frist.</div>
-      </aside>
-    </section>
-
     <nav class="legend-bar" aria-label="Filtrér kalender">
-      <span class="legend-title">Filter:</span>
-      <button class="filter-btn is-active" data-filter="all" type="button">Alle markeringer</button>
-      <button class="filter-btn" data-filter="thu" type="button"><span class="swatch sw-thu"></span>Torsdag kl. 08.00 (Aktiviteter &amp; ny tile)</button>
-      <button class="filter-btn" data-filter="tue" type="button"><span class="swatch sw-tue"></span>Tirsdag kl. 08.00 (Temaprojekt)</button>
-      <button class="filter-btn" data-filter="ola" type="button"><span class="swatch sw-ola"></span>OLA-hæfter &amp; opsamling</button>
-      <button class="filter-btn" data-filter="exam" type="button"><span class="swatch sw-exam"></span>Eksamen &amp; WISEflow</button>
-      <button class="filter-btn" data-filter="hol" type="button"><span class="swatch sw-hol"></span>Opstart, Påske &amp; helligdage</button>
+      <div class="legend-filters">
+        <button class="filter-btn is-active" data-filter="all" type="button">Alle</button>
+        <button class="filter-btn" data-filter="thu" type="button"><span class="swatch sw-thu"></span>Torsdag 08.00 (Aktiviteter + ny tile)</button>
+        <button class="filter-btn" data-filter="tue" type="button"><span class="swatch sw-tue"></span>Tirsdag 08.00 (Temaprojekt)</button>
+        <button class="filter-btn" data-filter="ola" type="button"><span class="swatch sw-ola"></span>OLA-hæfter</button>
+        <button class="filter-btn" data-filter="exam" type="button"><span class="swatch sw-exam"></span>Eksamen &amp; WISEflow</button>
+        <button class="filter-btn" data-filter="hol" type="button"><span class="swatch sw-hol"></span>Opstart, Påske &amp; helligdage</button>
+      </div>
+      <span class="hover-hint">Hold musen over en dato for emne &amp; studieuge (1–15)</span>
     </nav>
 
     <main class="months-grid" id="months-grid"></main>
 
-    <section class="milestones-section">
-      <div class="milestones-head">
-        <h2 class="milestones-title">Vigtigste milepæle · Forår 2027</h2>
-        <span class="milestones-note">Klik på en milepæl for at fremhæve datoen i kalenderen</span>
-      </div>
-      <div class="milestones-grid" id="milestones-grid"></div>
-    </section>
-
-    <footer class="footer-note">
-      <span>EK · Finansøkonom (online) 1. semester F27 · Ugentlige frister er kl. 08.00 på Moodle · Eksamen på WISEflow kl. 09.00.</span>
-      <span>Det personlige eksamenstidspunkt ses i WISEflow.</span>
-    </footer>
+    <section class="milestone-ribbon" id="milestone-ribbon" aria-label="Vigtigste milepæle"></section>
   </div>
 
   <div class="hover-card" id="hover-card" role="tooltip"></div>
   <div class="toast" id="toast"></div>
 
   <script>
-    // Kortlægning fra kalenderuge -> studieuge (1..15) + fagligt emne
     const STUDY_WEEKS = {
       5:  { num: 1,  topic: 'Den finansielle sektor & Excel pivottabeller' },
       6:  { num: 2,  topic: 'Undersøgelsesmetode & videnskabsteori' },
@@ -1120,194 +826,179 @@
       20: { num: 15, topic: 'Repetition & opsamling på 1. semester' }
     };
 
-    // Alle 100% verificerede datoer for Finansøkonom (online) 1. semester F27 (Januar–Juni 2027)
     const EVENTS = {
-      // JANUAR
       '2027-01-01': [
-        { cat: 'hol', tag: 'Nytårsdag', title: 'Nytårsdag', time: 'Helligdag', allDay: true, desc: 'Offentlig helligdag.' }
+        { cat: 'hol', tag: 'Nytår', title: 'Nytårsdag', time: 'Helligdag', allDay: true, desc: 'Offentlig helligdag.' }
       ],
       '2027-01-20': [
-        { cat: 'hol', tag: 'INTRO ÅBNER', title: 'Introprogrammet åbner på Moodle', time: 'Uge 3', allDay: true, topic: 'Opstart & studieteknik', desc: 'Introprogrammet og spørgeskemaet om mødetider åbner. Kom godt på plads med Zoom, Teams, SharePoint og studieteknik.' }
+        { cat: 'hol', tag: 'INTRO', title: 'Introprogrammet åbner på Moodle', time: 'Uge 3', allDay: true, topic: 'Opstart & studieteknik', desc: 'Introprogrammet og spørgeskemaet om mødetider åbner.' }
       ],
-
-      // FEBRUAR (Uge 5–8 · Studieuge 1–4)
       '2027-02-01': [
-        { cat: 'hol', tag: 'STUDIESTART', title: 'Undervisningen starter (Uge 5)', time: 'Mandag', allDay: true, studyWeek: 1, topic: STUDY_WEEKS[5].topic, desc: 'Første undervisningsuge af 15 starter på Moodle.' }
+        { cat: 'hol', tag: 'START', title: 'Undervisningen starter (Uge 5)', time: 'Mandag', allDay: true, studyWeek: 1, topic: STUDY_WEEKS[5].topic, desc: 'Studieuge 1 af 15 starter på Moodle.' }
       ],
       '2027-02-04': [
-        { cat: 'thu', tag: 'TOR 08 · U5', title: 'Aktiviteter uge 5 + Uge 6 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 1, topic: STUDY_WEEKS[5].topic, desc: 'Aflevering af individuelle aktiviteter for uge 5. Samtidig frigives næste uges tile (uge 6) på Moodle.' }
+        { cat: 'thu', tag: 'TOR U5', title: 'Aktiviteter uge 5 + Uge 6 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 1, topic: STUDY_WEEKS[5].topic, desc: 'Individuel aflevering for uge 5. Næste uges tile (uge 6) frigives samtidig.' }
       ],
       '2027-02-09': [
-        { cat: 'tue', tag: 'TIR 08 · TP5', title: 'Temaprojekt uge 5 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 1, topic: STUDY_WEEKS[5].topic, desc: 'Teamaflevering af temaprojekt fra uge 5 + kort TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U5', title: 'Temaprojekt uge 5 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 1, topic: STUDY_WEEKS[5].topic, desc: 'Teamaflevering af temaprojekt fra uge 5 + TrivselsBarometer.' }
       ],
       '2027-02-11': [
-        { cat: 'thu', tag: 'TOR 08 · U6', title: 'Aktiviteter uge 6 + Uge 7 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 2, topic: STUDY_WEEKS[6].topic, desc: 'Aflevering af individuelle aktiviteter for uge 6. Samtidig åbner uge 7-tilen.' }
+        { cat: 'thu', tag: 'TOR U6', title: 'Aktiviteter uge 6 + Uge 7 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 2, topic: STUDY_WEEKS[6].topic, desc: 'Individuel aflevering for uge 6. Uge 7-tilen åbner samtidig.' }
       ],
       '2027-02-16': [
-        { cat: 'tue', tag: 'TIR 08 · TP6', title: 'Temaprojekt uge 6 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 2, topic: STUDY_WEEKS[6].topic, desc: 'Teamaflevering af temaprojekt fra uge 6 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U6', title: 'Temaprojekt uge 6 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 2, topic: STUDY_WEEKS[6].topic, desc: 'Teamaflevering af temaprojekt fra uge 6 + TrivselsBarometer.' }
       ],
       '2027-02-18': [
-        { cat: 'thu', tag: 'TOR 08 · U7', title: 'Aktiviteter uge 7 + Uge 8 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 3, topic: STUDY_WEEKS[7].topic, desc: 'Aflevering af individuelle aktiviteter for uge 7. Samtidig åbner uge 8-tilen.' }
+        { cat: 'thu', tag: 'TOR U7', title: 'Aktiviteter uge 7 + Uge 8 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 3, topic: STUDY_WEEKS[7].topic, desc: 'Individuel aflevering for uge 7. Uge 8-tilen åbner samtidig.' }
       ],
       '2027-02-23': [
-        { cat: 'tue', tag: 'TIR 08 · TP7', title: 'Temaprojekt uge 7 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 3, topic: STUDY_WEEKS[7].topic, desc: 'Teamaflevering af temaprojekt fra uge 7 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U7', title: 'Temaprojekt uge 7 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 3, topic: STUDY_WEEKS[7].topic, desc: 'Teamaflevering af temaprojekt fra uge 7 + TrivselsBarometer.' }
       ],
       '2027-02-25': [
-        { cat: 'thu', tag: 'TOR 08 · U8', title: 'Aktiviteter uge 8 + Uge 9 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 4, topic: STUDY_WEEKS[8].topic, desc: 'Aflevering af individuelle aktiviteter for uge 8. Samtidig åbner uge 9-tilen.' }
+        { cat: 'thu', tag: 'TOR U8', title: 'Aktiviteter uge 8 + Uge 9 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 4, topic: STUDY_WEEKS[8].topic, desc: 'Individuel aflevering for uge 8. Uge 9-tilen åbner samtidig.' }
       ],
-
-      // MARTS (Uge 9–11 · Studieuge 5–7, Påske uge 12, Uge 13 start)
       '2027-03-02': [
-        { cat: 'tue', tag: 'TIR 08 · TP8', title: 'Temaprojekt uge 8 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 4, topic: STUDY_WEEKS[8].topic, desc: 'Teamaflevering af temaprojekt fra uge 8 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U8', title: 'Temaprojekt uge 8 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 4, topic: STUDY_WEEKS[8].topic, desc: 'Teamaflevering af temaprojekt fra uge 8 + TrivselsBarometer.' }
       ],
       '2027-03-04': [
-        { cat: 'thu', tag: 'TOR 08 · U9', title: 'Aktiviteter uge 9 + Uge 10 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 5, topic: STUDY_WEEKS[9].topic, desc: 'Aflevering af individuelle aktiviteter for uge 9. Samtidig åbner uge 10-tilen.' }
+        { cat: 'thu', tag: 'TOR U9', title: 'Aktiviteter uge 9 + Uge 10 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 5, topic: STUDY_WEEKS[9].topic, desc: 'Individuel aflevering for uge 9. Uge 10-tilen åbner samtidig.' }
       ],
       '2027-03-09': [
-        { cat: 'ola', tag: '★ OLA 1 · 08', title: 'OLA-hæfte 1 (Uge 5–8)', time: 'kl. 08.00', hour: 8, studyWeek: 5, topic: 'Obligatorisk milepæl · Studieuge 1–4', desc: 'Samling af rettede temaprojekter fra uge 5–8 (Finanssektoren, metode, statistik og hypotesetest).' },
-        { cat: 'tue', tag: 'TIR 08 · TP9', title: 'Temaprojekt uge 9 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 5, topic: STUDY_WEEKS[9].topic, desc: 'Teamaflevering af temaprojekt fra uge 9 + TrivselsBarometer.' }
+        { cat: 'ola', tag: '★ OLA 1', title: 'OLA-hæfte 1 (Uge 5–8)', time: 'kl. 08.00', hour: 8, studyWeek: 5, topic: 'Obligatorisk milepæl · Studieuge 1–4', desc: 'Samling af rettede temaprojekter fra uge 5–8 (Finanssektoren, metode, statistik og hypotesetest).' },
+        { cat: 'tue', tag: 'TP U9', title: 'Temaprojekt uge 9 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 5, topic: STUDY_WEEKS[9].topic, desc: 'Teamaflevering af temaprojekt fra uge 9 + TrivselsBarometer.' }
       ],
       '2027-03-11': [
-        { cat: 'thu', tag: 'TOR 08 · U10', title: 'Aktiviteter uge 10 + Uge 11 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 6, topic: STUDY_WEEKS[10].topic, desc: 'Aflevering af individuelle aktiviteter for uge 10. Samtidig åbner uge 11-tilen.' }
+        { cat: 'thu', tag: 'TOR U10', title: 'Aktiviteter uge 10 + Uge 11 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 6, topic: STUDY_WEEKS[10].topic, desc: 'Individuel aflevering for uge 10. Uge 11-tilen åbner samtidig.' }
       ],
       '2027-03-16': [
-        { cat: 'tue', tag: 'TIR 08 · TP10', title: 'Temaprojekt uge 10 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 6, topic: STUDY_WEEKS[10].topic, desc: 'Teamaflevering af temaprojekt fra uge 10 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U10', title: 'Temaprojekt uge 10 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 6, topic: STUDY_WEEKS[10].topic, desc: 'Teamaflevering af temaprojekt fra uge 10 + TrivselsBarometer.' }
       ],
       '2027-03-18': [
-        { cat: 'thu', tag: 'TOR 08 · U11', title: 'Aktiviteter uge 11 + Uge 13 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 7, topic: STUDY_WEEKS[11].topic, desc: 'Aflevering af aktiviteter for uge 11. Materialet til uge 13 (starter 29. marts efter påske) frigives samtidig.' }
+        { cat: 'thu', tag: 'TOR U11', title: 'Aktiviteter uge 11 + Uge 13 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 7, topic: STUDY_WEEKS[11].topic, desc: 'Individuel aflevering for uge 11. Materialet til uge 13 (efter påske) frigives samtidig.' }
       ],
       '2027-03-22': [
-        { cat: 'hol', tag: 'PÅSKEFERIE', title: 'Påskeferie — Uge 12 (22.–28. marts)', time: 'Fri uge', allDay: true, endDate: '2027-03-29', topic: 'Tæller ikke med i de 15 uger', desc: 'Påskeferie hele uge 12. Temaprojektet for uge 11 er rykket til tirsdag 30. marts kl. 08.00.' }
+        { cat: 'hol', tag: 'PÅSKE', title: 'Påskeferie — Uge 12 (22.–28. marts)', time: 'Fri uge', allDay: true, endDate: '2027-03-29', topic: 'Tæller ikke med i de 15 uger', desc: 'Fri hele uge 12. Temaprojekt for uge 11 er rykket til tirsdag 30. marts kl. 08.00.' }
       ],
       '2027-03-25': [
-        { cat: 'hol', tag: 'Skærtorsdag', title: 'Skærtorsdag (Påskeferie)', time: 'Helligdag', skipIcs: true, desc: 'Del af påskeferien i uge 12.' }
+        { cat: 'hol', tag: 'Skærtor.', title: 'Skærtorsdag (Påskeferie)', time: 'Helligdag', skipIcs: true, desc: 'Del af påskeferien i uge 12.' }
       ],
       '2027-03-26': [
-        { cat: 'hol', tag: 'Langfredag', title: 'Langfredag (Påskeferie)', time: 'Helligdag', skipIcs: true, desc: 'Del af påskeferien i uge 12.' }
+        { cat: 'hol', tag: 'Langfre.', title: 'Langfredag (Påskeferie)', time: 'Helligdag', skipIcs: true, desc: 'Del af påskeferien i uge 12.' }
       ],
       '2027-03-28': [
-        { cat: 'hol', tag: 'Påskedag', title: 'Påskedag (Påskeferie)', time: 'Helligdag', skipIcs: true, desc: 'Sidste dag i påskeferien uge 12.' }
+        { cat: 'hol', tag: 'Påske', title: 'Påskedag (Påskeferie)', time: 'Helligdag', skipIcs: true, desc: 'Sidste dag i påskeferien uge 12.' }
       ],
       '2027-03-29': [
-        { cat: 'hol', tag: '2. påskedag', title: '2. påskedag · Uge 13 begynder', time: 'Helligdag', skipIcs: true, studyWeek: 8, topic: STUDY_WEEKS[13].topic, desc: '2. påskedag. Studieuge 8 af 15 starter — materialet har allerede været åbent siden 18. marts.' }
+        { cat: 'hol', tag: '2. påske', title: '2. påskedag · Uge 13 starter', time: 'Helligdag', skipIcs: true, studyWeek: 8, topic: STUDY_WEEKS[13].topic, desc: 'Studieuge 8 af 15 starter — materialet har været åbent siden 18. marts.' }
       ],
       '2027-03-30': [
-        { cat: 'tue', tag: 'TIR 08 · TP11', title: 'Temaprojekt uge 11 (Rykket)', time: 'kl. 08.00', hour: 8, studyWeek: 7, topic: STUDY_WEEKS[11].topic, desc: 'Temaprojekt for uge 11 (15.–21. marts), rykket til tirsdag efter påske + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U11', title: 'Temaprojekt uge 11 (Rykket)', time: 'kl. 08.00', hour: 8, studyWeek: 7, topic: STUDY_WEEKS[11].topic, desc: 'Temaprojekt for uge 11, rykket til tirsdag efter påske + TrivselsBarometer.' }
       ],
-
-      // APRIL (Uge 13–17 · Studieuge 8–12)
       '2027-04-01': [
-        { cat: 'thu', tag: 'TOR 08 · U13', title: 'Aktiviteter uge 13 + Uge 14 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 8, topic: STUDY_WEEKS[13].topic, desc: 'Aflevering af individuelle aktiviteter for uge 13. Samtidig åbner uge 14-tilen.' }
+        { cat: 'thu', tag: 'TOR U13', title: 'Aktiviteter uge 13 + Uge 14 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 8, topic: STUDY_WEEKS[13].topic, desc: 'Individuel aflevering for uge 13. Uge 14-tilen åbner samtidig.' }
       ],
       '2027-04-06': [
-        { cat: 'tue', tag: 'TIR 08 · TP13', title: 'Temaprojekt uge 13 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 8, topic: STUDY_WEEKS[13].topic, desc: 'Teamaflevering af temaprojekt fra uge 13 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U13', title: 'Temaprojekt uge 13 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 8, topic: STUDY_WEEKS[13].topic, desc: 'Teamaflevering af temaprojekt fra uge 13 + TrivselsBarometer.' }
       ],
       '2027-04-08': [
-        { cat: 'thu', tag: 'TOR 08 · U14', title: 'Aktiviteter uge 14 + Uge 15 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 9, topic: STUDY_WEEKS[14].topic, desc: 'Aflevering af individuelle aktiviteter for uge 14. Samtidig åbner uge 15-tilen.' }
+        { cat: 'thu', tag: 'TOR U14', title: 'Aktiviteter uge 14 + Uge 15 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 9, topic: STUDY_WEEKS[14].topic, desc: 'Individuel aflevering for uge 14. Uge 15-tilen åbner samtidig.' }
       ],
       '2027-04-13': [
-        { cat: 'tue', tag: 'TIR 08 · TP14', title: 'Temaprojekt uge 14 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 9, topic: STUDY_WEEKS[14].topic, desc: 'Teamaflevering af temaprojekt fra uge 14 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U14', title: 'Temaprojekt uge 14 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 9, topic: STUDY_WEEKS[14].topic, desc: 'Teamaflevering af temaprojekt fra uge 14 + TrivselsBarometer.' }
       ],
       '2027-04-15': [
-        { cat: 'thu', tag: 'TOR 08 · U15', title: 'Aktiviteter uge 15 + Uge 16 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 10, topic: STUDY_WEEKS[15].topic, desc: 'Aflevering af individuelle aktiviteter for uge 15. Samtidig åbner uge 16-tilen.' }
+        { cat: 'thu', tag: 'TOR U15', title: 'Aktiviteter uge 15 + Uge 16 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 10, topic: STUDY_WEEKS[15].topic, desc: 'Individuel aflevering for uge 15. Uge 16-tilen åbner samtidig.' }
       ],
       '2027-04-20': [
-        { cat: 'tue', tag: 'TIR 08 · TP15', title: 'Temaprojekt uge 15 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 10, topic: STUDY_WEEKS[15].topic, desc: 'Teamaflevering af temaprojekt fra uge 15 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U15', title: 'Temaprojekt uge 15 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 10, topic: STUDY_WEEKS[15].topic, desc: 'Teamaflevering af temaprojekt fra uge 15 + TrivselsBarometer.' }
       ],
       '2027-04-22': [
-        { cat: 'thu', tag: 'TOR 08 · U16', title: 'Aktiviteter uge 16 + Uge 17 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 11, topic: STUDY_WEEKS[16].topic, desc: 'Aflevering af individuelle aktiviteter for uge 16. Samtidig åbner uge 17-tilen.' }
+        { cat: 'thu', tag: 'TOR U16', title: 'Aktiviteter uge 16 + Uge 17 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 11, topic: STUDY_WEEKS[16].topic, desc: 'Individuel aflevering for uge 16. Uge 17-tilen åbner samtidig.' }
       ],
       '2027-04-27': [
-        { cat: 'tue', tag: 'TIR 08 · TP16', title: 'Temaprojekt uge 16 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 11, topic: STUDY_WEEKS[16].topic, desc: 'Teamaflevering af temaprojekt fra uge 16 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U16', title: 'Temaprojekt uge 16 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 11, topic: STUDY_WEEKS[16].topic, desc: 'Teamaflevering af temaprojekt fra uge 16 + TrivselsBarometer.' }
       ],
       '2027-04-29': [
-        { cat: 'thu', tag: 'TOR 08 · U17', title: 'Aktiviteter uge 17 + Uge 18 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 12, topic: STUDY_WEEKS[17].topic, desc: 'Aflevering af individuelle aktiviteter for uge 17. Samtidig åbner uge 18-tilen.' }
+        { cat: 'thu', tag: 'TOR U17', title: 'Aktiviteter uge 17 + Uge 18 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 12, topic: STUDY_WEEKS[17].topic, desc: 'Individuel aflevering for uge 17. Uge 18-tilen åbner samtidig.' }
       ],
-
-      // MAJ (Uge 18–21 · Studieuge 13–15)
       '2027-05-04': [
-        { cat: 'ola', tag: '★ OLA 2 · 08', title: 'OLA-hæfte 2 (Uge 9–11 & 13–16)', time: 'kl. 08.00', hour: 8, studyWeek: 12, topic: 'Obligatorisk milepæl · Studieuge 5–11', desc: 'Samling af rettede temaprojekter for de syv uger 9–11 og 13–16 (Regression, finansiering og mikroøkonomi).' },
-        { cat: 'tue', tag: 'TIR 08 · TP17', title: 'Temaprojekt uge 17 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 12, topic: STUDY_WEEKS[17].topic, desc: 'Teamaflevering af temaprojekt fra uge 17 + TrivselsBarometer.' }
+        { cat: 'ola', tag: '★ OLA 2', title: 'OLA-hæfte 2 (Uge 9–11 & 13–16)', time: 'kl. 08.00', hour: 8, studyWeek: 12, topic: 'Obligatorisk milepæl · Studieuge 5–11', desc: 'Samling af rettede temaprojekter for de syv uger 9–11 og 13–16.' },
+        { cat: 'tue', tag: 'TP U17', title: 'Temaprojekt uge 17 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 12, topic: STUDY_WEEKS[17].topic, desc: 'Teamaflevering af temaprojekt fra uge 17 + TrivselsBarometer.' }
       ],
       '2027-05-06': [
-        { cat: 'thu', tag: 'TOR 08 · U18', title: 'Aktiviteter uge 18 + Uge 19 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 13, topic: STUDY_WEEKS[18].topic, desc: 'Aflevering af aktiviteter for uge 18. Bemærk: Kristi Himmelfartsdag — aflevér gerne i god tid onsdag.' },
-        { cat: 'hol', tag: 'Kr. Himmelf.', title: 'Kristi Himmelfartsdag', time: 'Helligdag', skipIcs: true, desc: 'Offentlig helligdag.' }
+        { cat: 'thu', tag: 'TOR U18', title: 'Aktiviteter uge 18 + Uge 19 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 13, topic: STUDY_WEEKS[18].topic, desc: 'Individuel aflevering for uge 18. Bemærk: Kristi Himmelfartsdag — aflevér gerne onsdag.' },
+        { cat: 'hol', tag: 'Kr. Him.', title: 'Kristi Himmelfartsdag', time: 'Helligdag', skipIcs: true, desc: 'Offentlig helligdag.' }
       ],
       '2027-05-11': [
-        { cat: 'tue', tag: 'TIR 08 · TP18', title: 'Temaprojekt uge 18 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 13, topic: STUDY_WEEKS[18].topic, desc: 'Teamaflevering af temaprojekt fra uge 18 + TrivselsBarometer.' }
+        { cat: 'tue', tag: 'TP U18', title: 'Temaprojekt uge 18 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 13, topic: STUDY_WEEKS[18].topic, desc: 'Teamaflevering af temaprojekt fra uge 18 + TrivselsBarometer.' }
       ],
       '2027-05-13': [
-        { cat: 'thu', tag: 'TOR 08 · U19', title: 'Aktiviteter uge 19 + Uge 20 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 14, topic: STUDY_WEEKS[19].topic, desc: 'Aflevering af individuelle aktiviteter for uge 19. Samtidig åbner uge 20 (Repetition).' }
+        { cat: 'thu', tag: 'TOR U19', title: 'Aktiviteter uge 19 + Uge 20 åbner', time: 'kl. 08.00', hour: 8, studyWeek: 14, topic: STUDY_WEEKS[19].topic, desc: 'Individuel aflevering for uge 19. Uge 20 (Repetition) åbner samtidig.' }
       ],
       '2027-05-16': [
-        { cat: 'hol', tag: 'Pinsedag', title: 'Pinsedag', time: 'Helligdag', skipIcs: true, desc: 'Offentlig helligdag.' }
+        { cat: 'hol', tag: 'Pinse', title: 'Pinsedag', time: 'Helligdag', skipIcs: true, desc: 'Offentlig helligdag.' }
       ],
       '2027-05-17': [
-        { cat: 'hol', tag: '2. pinsedag', title: '2. pinsedag', time: 'Helligdag', skipIcs: true, desc: 'Offentlig helligdag.' }
+        { cat: 'hol', tag: '2. pinse', title: '2. pinsedag', time: 'Helligdag', skipIcs: true, desc: 'Offentlig helligdag.' }
       ],
       '2027-05-18': [
-        { cat: 'exam', tag: 'EKSAMEN UDL.', title: 'Eksamensopgaven udleveres på Moodle', time: 'kl. 08.00', hour: 8, studyWeek: 15, topic: '1. interne eksamen', desc: 'Opgaven til 1. interne eksamen udleveres på Moodle kl. 08.00.' },
-        { cat: 'tue', tag: 'TIR 08 · TP19', title: 'Sidste Temaprojekt — uge 19 (Team)', time: 'kl. 08.00', hour: 8, studyWeek: 14, topic: STUDY_WEEKS[19].topic, desc: 'Teamaflevering af sidste temaprojekt (uge 19). Der er ingen tema-aflevering for uge 20.' }
+        { cat: 'exam', tag: 'OPGAVE', title: 'Eksamensopgaven udleveres på Moodle', time: 'kl. 08.00', hour: 8, studyWeek: 15, topic: '1. interne eksamen', desc: 'Opgaven til 1. interne eksamen udleveres på Moodle kl. 08.00.' },
+        { cat: 'tue', tag: 'TP U19', title: 'Sidste Temaprojekt — uge 19', time: 'kl. 08.00', hour: 8, studyWeek: 14, topic: STUDY_WEEKS[19].topic, desc: 'Sidste team-temaprojekt. Der er ingen tema-aflevering for uge 20.' }
       ],
       '2027-05-20': [
-        { cat: 'thu', tag: 'TOR 08 · U20', title: 'Repetitionscase (Uge 20)', time: 'kl. 08.00', hour: 8, studyWeek: 15, topic: STUDY_WEEKS[20].topic, desc: 'Afslutning på de 15 undervisningsuger med opsamlings- og repetitionscase. Ingen tema-aflevering i uge 20.' }
+        { cat: 'thu', tag: 'TOR U20', title: 'Repetitionscase (Uge 20)', time: 'kl. 08.00', hour: 8, studyWeek: 15, topic: STUDY_WEEKS[20].topic, desc: 'Sidste af de 15 undervisningsuger (ingen tema-aflevering i uge 20).' }
       ],
       '2027-05-25': [
-        { cat: 'ola', tag: '★ OLA 3 · 08', title: 'OLA-hæfte 3 (Uge 17–19)', time: 'kl. 08.00', hour: 8, topic: 'Obligatorisk milepæl · Studieuge 12–14', desc: 'Samling af rettede temaprojekter fra de tre uger 17–19 (Markedsformer, knap kapacitet og kalkulation).' }
+        { cat: 'ola', tag: '★ OLA 3', title: 'OLA-hæfte 3 (Uge 17–19)', time: 'kl. 08.00', hour: 8, topic: 'Obligatorisk milepæl · Studieuge 12–14', desc: 'Samling af rettede temaprojekter fra de tre uger 17–19.' }
       ],
       '2027-05-28': [
-        { cat: 'ola', tag: 'OLA-OPSAML.', title: 'OLA-opsamling til ordinær eksamen', time: 'kl. 08.00', hour: 8, topic: 'Sidste OLA-frist', desc: 'Sidste frist for eventuel OLA-opsamling, så alle tre OLA-hæfter er godkendt inden den ordinære eksamen.' }
+        { cat: 'ola', tag: 'OLA-OPS', title: 'OLA-opsamling til ordinær eksamen', time: 'kl. 08.00', hour: 8, topic: 'Sidste OLA-frist', desc: 'Sidste frist for eventuel OLA-opsamling inden den ordinære eksamen.' }
       ],
-
-      // JUNI (Projektskrivning uge 21–23, Eksamen uge 24–25, Reeksamen uge 26)
       '2027-06-05': [
-        { cat: 'hol', tag: 'Grundlovsdag', title: 'Grundlovsdag', time: 'Lørdag', skipIcs: true, desc: 'Projektskrivning i uge 21–23 frem mod eksamensaflevering.' }
+        { cat: 'hol', tag: 'Grundl.', title: 'Grundlovsdag', time: 'Lørdag', skipIcs: true, desc: 'Projektskrivning i uge 21–23 frem mod WISEflow.' }
       ],
       '2027-06-14': [
-        { cat: 'exam', tag: 'KICK-OFF 09', title: 'Eksamens Kick-off (Zoom)', time: 'kl. 09.00', hour: 9, topic: '1. interne eksamen', desc: 'Fælles kick-off på Zoom ved afslutningen af projektperioden.' }
+        { cat: 'exam', tag: 'KICK-OFF', title: 'Eksamens Kick-off (Zoom)', time: 'kl. 09.00', hour: 9, topic: '1. interne eksamen', desc: 'Fælles kick-off på Zoom ved afslutningen af projektperioden.' }
       ],
       '2027-06-16': [
-        { cat: 'exam', tag: 'BRIEFING 09', title: 'Eksamensbriefing (Zoom)', time: 'kl. 09.00', hour: 9, topic: '1. interne eksamen', desc: 'Praktisk briefing om aflevering i WISEflow og selve den mundtlige prøve.' }
+        { cat: 'exam', tag: 'BRIEFING', title: 'Eksamensbriefing (Zoom)', time: 'kl. 09.00', hour: 9, topic: '1. interne eksamen', desc: 'Praktisk briefing om aflevering i WISEflow og den mundtlige prøve.' }
       ],
       '2027-06-17': [
-        { cat: 'exam', tag: 'WISEFLOW 09', title: 'Aflevering af eksamensprojekt på WISEflow', time: 'kl. 09.00', hour: 9, topic: 'Endelig eksamensaflevering', desc: 'Aflevering af eksamensprojektet på WISEflow senest torsdag 17. juni kl. 09.00.' }
+        { cat: 'exam', tag: 'WISEFLOW', title: 'Aflevering på WISEflow', time: 'kl. 09.00', hour: 9, topic: 'Endelig eksamensaflevering', desc: 'Aflevering af eksamensprojektet på WISEflow senest kl. 09.00.' }
       ],
       '2027-06-21': [
-        { cat: 'exam', tag: 'MUNDTLIG', title: 'Mundtlig eksamen — Dag 1 (Zoom)', time: '30 min.', allDay: true, topic: '1. interne mundtlige prøve', desc: '5 min. oplæg + 20 min. samtale + 5 min. votering. Dit personlige tidspunkt står i WISEflow.' }
+        { cat: 'exam', tag: 'MUNDTLIG', title: 'Mundtlig eksamen — Dag 1', time: '30 min.', allDay: true, topic: '1. interne mundtlige prøve', desc: '5 min. oplæg + 20 min. samtale + 5 min. votering. Tidspunkt står i WISEflow.' }
       ],
       '2027-06-22': [
-        { cat: 'exam', tag: 'MUNDTLIG', title: 'Mundtlig eksamen — Dag 2 (Zoom)', time: '30 min.', allDay: true, topic: '1. interne mundtlige prøve', desc: '1. interne mundtlige prøve. Dit personlige tidspunkt står i WISEflow.' }
+        { cat: 'exam', tag: 'MUNDTLIG', title: 'Mundtlig eksamen — Dag 2', time: '30 min.', allDay: true, topic: '1. interne mundtlige prøve', desc: '1. interne mundtlige prøve. Tidspunkt står i WISEflow.' }
       ],
       '2027-06-23': [
         { cat: 'exam', tag: 'RESERVE', title: 'Mundtlig eksamen — Reservedag', time: 'Reserve', allDay: true, topic: 'Reservedag', desc: 'Reservedag til den mundtlige prøve ved behov.' }
       ],
       '2027-06-29': [
-        { cat: 'exam', tag: 'REEKSAMEN', title: 'Reeksamen begynder (Uge 26)', time: 'Fra 29/6', allDay: true, topic: 'Reeksamen', desc: 'Reeksamensperiode i uge 26.' }
+        { cat: 'exam', tag: 'REEKS.', title: 'Reeksamen begynder (Uge 26)', time: 'Fra 29/6', allDay: true, topic: 'Reeksamen', desc: 'Reeksamensperiode i uge 26.' }
       ]
     };
 
     const MONTHS = [
-      { m: 0, name: 'Januar 2027', focus: 'Introprogram åbner 20/1' },
-      { m: 1, name: 'Februar 2027', focus: 'Studieuge 1–4 · Sektor, Metode & Statistik' },
-      { m: 2, name: 'Marts 2027', focus: 'OLA 1 (9/3) · Påskeferie uge 12' },
-      { m: 3, name: 'April 2027', focus: 'Studieuge 8–12 · Finansiering & Mikroøkonomi' },
-      { m: 4, name: 'Maj 2027', focus: 'OLA 2 (4/5) · Opgave 18/5 · OLA 3 (25/5)' },
-      { m: 5, name: 'Juni 2027', focus: 'WISEflow 17/6 · Mundtlig eksamen 21–22/6' }
+      { m: 0, name: 'Januar', focus: 'Intro åbner 20/1' },
+      { m: 1, name: 'Februar', focus: 'Uge 1–4/15 · Sektor, Metode & Statistik' },
+      { m: 2, name: 'Marts', focus: 'OLA 1 (9/3) · Påske uge 12' },
+      { m: 3, name: 'April', focus: 'Uge 8–12/15 · Finans. & Mikroøkonomi' },
+      { m: 4, name: 'Maj', focus: 'OLA 2 (4/5) · Opgave 18/5 · OLA 3 (25/5)' },
+      { m: 5, name: 'Juni', focus: 'WISEflow 17/6 · Mundtlig 21–22/6' }
     ];
 
-    const MILESTONES = [
-      { date: '2027-01-20', label: '20. jan', name: 'Introprogram åbner', sub: 'Moodle + mødetider', cat: 'hol' },
-      { date: '2027-02-01', label: '1. feb · Uge 1/15', name: 'Studiestart (Uge 5)', sub: '15 ugers forløb starter', cat: 'hol' },
-      { date: '2027-03-09', label: '9. mar · 08.00', name: 'OLA-hæfte 1', sub: 'Studieuge 1–4 (uge 5–8)', cat: 'ola' },
-      { date: '2027-03-22', label: '22.–28. mar', name: 'Påskeferie (Uge 12)', sub: 'Fri · TP11 rykket til 30/3', cat: 'hol' },
-      { date: '2027-05-04', label: '4. maj · 08.00', name: 'OLA-hæfte 2', sub: 'Studieuge 5–11 (7 uger)', cat: 'ola' },
-      { date: '2027-05-18', label: '18. maj · 08.00', name: 'Eksamensopgave', sub: 'Udleveres på Moodle', cat: 'exam' },
-      { date: '2027-05-25', label: '25. maj · 08.00', name: 'OLA-hæfte 3', sub: 'Studieuge 12–14 (3 uger)', cat: 'ola' },
-      { date: '2027-05-28', label: '28. maj · 08.00', name: 'OLA-opsamling', sub: 'Frist til ordinær eksamen', cat: 'ola' },
-      { date: '2027-06-14', label: '14. jun · 09.00', name: 'Kick-off & Briefing', sub: 'Zoom 14/6 & 16/6 kl. 09', cat: 'exam' },
-      { date: '2027-06-17', label: '17. jun · 09.00', name: 'WISEflow-aflevering', sub: 'Projektet afleveres', cat: 'exam' },
-      { date: '2027-06-21', label: '21.–22. jun', name: 'Mundtlig eksamen', sub: '23/6 er reservedag', cat: 'exam' },
-      { date: '2027-06-29', label: 'Fra 29. jun', name: 'Reeksamen', sub: 'Uge 26', cat: 'exam' }
+    const RIBBON = [
+      { date: '2027-01-20', d: '20. jan', t: 'Intro åbner', cat: 'hol' },
+      { date: '2027-02-01', d: '1. feb', t: 'Studiestart (1/15)', cat: 'hol' },
+      { date: '2027-03-09', d: '9. mar · 08', t: '★ OLA-hæfte 1', cat: 'ola' },
+      { date: '2027-03-22', d: 'Uge 12', t: 'Påskeferie (fri)', cat: 'hol' },
+      { date: '2027-05-04', d: '4. maj · 08', t: '★ OLA-hæfte 2', cat: 'ola' },
+      { date: '2027-05-18', d: '18. maj · 08', t: 'Eksamensopgave', cat: 'exam' },
+      { date: '2027-05-25', d: '25. maj · 08', t: '★ OLA 3 (+28/5)', cat: 'ola' },
+      { date: '2027-06-17', d: '17. jun · 09', t: 'WISEflow-aflev.', cat: 'exam' },
+      { date: '2027-06-21', d: '21–22. jun', t: 'Mundtlig eksamen', cat: 'exam' }
     ];
 
     const WEEKDAYS_DA = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'];
@@ -1334,20 +1025,12 @@
     }
 
     const monthsGrid = document.getElementById('months-grid');
-    const milestonesGrid = document.getElementById('milestones-grid');
-    const detailDateEl = document.getElementById('detail-date');
-    const detailWeekEl = document.getElementById('detail-week');
-    const detailStudyEl = document.getElementById('detail-study');
-    const studyProgressWrap = document.getElementById('study-progress-wrap');
-    const studyProgressLabel = document.getElementById('study-progress-label');
-    const studyProgressFill = document.getElementById('study-progress-fill');
-    const detailListEl = document.getElementById('detail-list');
+    const ribbonEl = document.getElementById('milestone-ribbon');
     const hoverCard = document.getElementById('hover-card');
     const toastEl = document.getElementById('toast');
 
-    let activeFilter = 'all';
-    let selectedKey = '2027-03-09';
     const cellMap = new Map();
+    let highlightedKey = null;
 
     function showToast(html) {
       toastEl.innerHTML = html;
@@ -1357,12 +1040,12 @@
     }
 
     function positionHoverCard(clientX, clientY) {
-      const pad = 16;
-      const w = hoverCard.offsetWidth || 315;
+      const pad = 14;
+      const w = hoverCard.offsetWidth || 330;
       const h = hoverCard.offsetHeight || 190;
-      let x = clientX + 18;
-      let y = clientY - 12;
-      if (x + w + pad > window.innerWidth) x = clientX - w - 18;
+      let x = clientX + 16;
+      let y = clientY - 10;
+      if (x + w + pad > window.innerWidth) x = clientX - w - 16;
       if (y + h + pad > window.innerHeight) y = window.innerHeight - h - pad;
       if (y < pad) y = pad;
       hoverCard.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
@@ -1386,7 +1069,7 @@
 
       hoverCard.innerHTML = `
         <div class="hc-top">
-          <span class="hc-date">${WEEKDAYS_DA[dt.getDay()]} ${d}. ${MONTHS_DA[m - 1]}</span>
+          <span class="hc-date">${WEEKDAYS_DA[dt.getDay()]} ${d}. ${MONTHS_DA[m - 1]} 2027</span>
           <span class="hc-badge">${swNum ? `UGE ${wk} · ${swNum}/15` : `UGE ${wk}`}</span>
         </div>
         ${swNum ? `
@@ -1421,10 +1104,10 @@
       MONTHS.forEach(({ m, name, focus }, idx) => {
         const card = document.createElement('section');
         card.className = 'month-card';
-        card.style.animationDelay = `${0.08 + idx * 0.055}s`;
+        card.style.animationDelay = `${0.04 + idx * 0.045}s`;
         card.innerHTML = `
           <div class="month-header">
-            <span class="month-name">${name}</span>
+            <span class="month-name">${name} 2027</span>
             <span class="month-focus">${focus}</span>
           </div>
         `;
@@ -1482,10 +1165,18 @@
             if (isEasterDate(key)) td.classList.add('is-easter-day');
             else if (isProjectPeriod(key) && col < 5 && evs.length === 0) td.classList.add('is-project-day');
 
-            const top = document.createElement('div');
-            top.className = 'day-top';
-            top.innerHTML = `<span class="day-num">${dNum}</span>`;
-            td.appendChild(top);
+            if (evs.length > 0) {
+              const prio = evs.some((e) => e.cat === 'ola') ? 'ola'
+                : evs.some((e) => e.cat === 'exam') ? 'exam'
+                : evs.some((e) => e.cat === 'thu') ? 'thu'
+                : evs.some((e) => e.cat === 'tue') ? 'tue' : null;
+              if (prio) td.classList.add(`tint-${prio}`);
+            }
+
+            const numSpan = document.createElement('span');
+            numSpan.className = 'day-num';
+            numSpan.textContent = dNum;
+            td.appendChild(numSpan);
 
             if (evs.length > 0 || isEasterDate(key)) {
               td.classList.add('has-events');
@@ -1493,20 +1184,19 @@
               td.dataset.cats = evs.length ? evs.map((e) => e.cat).join(',') : 'hol';
 
               if (evs.length > 0) {
-                const badges = document.createElement('div');
-                badges.className = 'day-badges';
+                const tags = document.createElement('div');
+                tags.className = 'day-tags';
                 evs.forEach((ev) => {
-                  const span = document.createElement('span');
-                  span.className = `ev-tag cat-${ev.cat}`;
-                  span.textContent = ev.tag;
-                  badges.appendChild(span);
+                  const p = document.createElement('span');
+                  p.className = `ev-pill cat-${ev.cat}`;
+                  p.textContent = ev.tag;
+                  tags.appendChild(p);
                 });
-                td.appendChild(badges);
+                td.appendChild(tags);
               }
 
               td.addEventListener('mouseenter', (e) => {
                 tr.classList.add('is-row-hover');
-                showDetail(key);
                 openHoverCard(key, e.clientX, e.clientY);
               });
               td.addEventListener('mousemove', (e) => {
@@ -1518,7 +1208,6 @@
                 tr.classList.remove('is-row-hover');
                 closeHoverCard();
               });
-              td.addEventListener('click', () => selectDate(key, false));
               cellMap.set(key, td);
             }
 
@@ -1534,63 +1223,7 @@
       });
     }
 
-    function showDetail(key) {
-      const [y, m, d] = key.split('-').map(Number);
-      const dt = new Date(y, m - 1, d);
-      const wk = isoWeek(dt);
-      const evs = EVENTS[key] || (isEasterDate(key) ? [{
-        cat: 'hol',
-        title: 'Påskeferie (fri uge)',
-        time: '22.–28. marts',
-        topic: 'Tæller ikke med i de 15 uger',
-        desc: 'Uge 12 er fri. Temaprojektet for uge 11 er rykket til tirsdag 30. marts kl. 08.00.'
-      }] : []);
-
-      const swNum = evs.find((e) => e.studyWeek)?.studyWeek || STUDY_WEEKS[wk]?.num || null;
-
-      detailDateEl.textContent = `${WEEKDAYS_DA[dt.getDay()]} ${d}. ${MONTHS_DA[m - 1]} ${y}`;
-      detailWeekEl.textContent = wk === 12 ? 'UGE 12 · PÅSKE' : `UGE ${wk}`;
-
-      if (swNum) {
-        detailStudyEl.style.display = 'inline-block';
-        detailStudyEl.textContent = `STUDIEUGE ${swNum}/15`;
-        studyProgressWrap.classList.add('is-visible');
-        studyProgressLabel.textContent = `Undervisningsuge ${swNum} af 15`;
-        studyProgressFill.style.width = `${Math.round((swNum / 15) * 100)}%`;
-      } else {
-        detailStudyEl.style.display = 'none';
-        studyProgressWrap.classList.remove('is-visible');
-      }
-
-      detailListEl.innerHTML = evs.map((ev) => `
-        <div class="detail-item cat-${ev.cat}">
-          <div class="detail-item-top">
-            <span>${ev.title}</span>
-            <span class="detail-time">${ev.time}</span>
-          </div>
-          ${ev.topic ? `<div class="detail-topic">Emne: ${ev.topic}</div>` : ''}
-          <div class="detail-desc">${ev.desc}</div>
-        </div>
-      `).join('');
-    }
-
-    function selectDate(key, scrollIntoView = false) {
-      if (selectedKey && cellMap.has(selectedKey)) {
-        cellMap.get(selectedKey).classList.remove('is-selected');
-      }
-      selectedKey = key;
-      if (cellMap.has(key)) {
-        const td = cellMap.get(key);
-        td.classList.add('is-selected');
-        if (scrollIntoView) {
-          td.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
-      showDetail(key);
-    }
-
     function applyFilter(filter) {
-      activeFilter = filter;
       document.querySelectorAll('.filter-btn').forEach((btn) => {
         btn.classList.toggle('is-active', btn.dataset.filter === filter);
       });
@@ -1601,23 +1234,34 @@
       });
     }
 
-    function renderMilestones() {
-      milestonesGrid.innerHTML = '';
-      MILESTONES.forEach((ms) => {
-        const div = document.createElement('button');
-        div.type = 'button';
-        div.className = `ms-card cat-${ms.cat}`;
-        div.style.textAlign = 'left';
-        div.innerHTML = `
-          <div class="ms-date">${ms.label}</div>
-          <div class="ms-name">${ms.name}</div>
-          <div class="ms-sub">${ms.sub}</div>
-        `;
-        div.addEventListener('click', () => {
+    function renderRibbon() {
+      ribbonEl.innerHTML = '';
+      RIBBON.forEach((ms) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `ms-chip cat-${ms.cat}`;
+        btn.innerHTML = `<span class="ms-d">${ms.d}</span><span class="ms-t">${ms.t}</span>`;
+        btn.addEventListener('mouseenter', () => {
           applyFilter('all');
-          selectDate(ms.date, true);
+          if (highlightedKey && cellMap.has(highlightedKey)) {
+            cellMap.get(highlightedKey).classList.remove('is-highlighted');
+          }
+          highlightedKey = ms.date;
+          const td = cellMap.get(ms.date);
+          if (td) {
+            td.classList.add('is-highlighted');
+            const rect = td.getBoundingClientRect();
+            openHoverCard(ms.date, rect.right, rect.top);
+          }
         });
-        milestonesGrid.appendChild(div);
+        btn.addEventListener('mouseleave', () => {
+          if (highlightedKey && cellMap.has(highlightedKey)) {
+            cellMap.get(highlightedKey).classList.remove('is-highlighted');
+          }
+          highlightedKey = null;
+          closeHoverCard();
+        });
+        ribbonEl.appendChild(btn);
       });
     }
 
@@ -1726,16 +1370,10 @@
       btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
     });
 
-    document.getElementById('btn-reset').addEventListener('click', () => {
-      applyFilter('all');
-      selectDate('2027-03-09', false);
-    });
-
     document.getElementById('btn-print').addEventListener('click', () => window.print());
 
     renderMonths();
-    renderMilestones();
-    selectDate('2027-03-09', false);
+    renderRibbon();
   </script>
 </body>
 </html>
