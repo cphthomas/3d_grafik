@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EK · Semesterkalender 2027 — Finansøkonom (online) 1. semester</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a2540'/%3E%3Crect x='2' y='2' width='60' height='60' fill='none' stroke='%23facc15' stroke-width='4'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' font-size='30' fill='%23facc15'%3EEK%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
@@ -78,8 +79,9 @@
       gap: 10px;
       padding: 7px 12px;
       background: var(--paper);
-      border: 2px solid var(--line-strong);
-      box-shadow: 3px 3px 0 var(--line-strong);
+      border: 1.5px solid #cbd5e1;
+      border-top: 3px solid var(--ek-navy);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
       flex-shrink: 0;
     }
 
@@ -148,26 +150,26 @@
       gap: 6px;
       background: var(--paper);
       color: var(--ink);
-      border: 2px solid var(--line-strong);
+      border: 1.5px solid var(--ek-navy);
       padding: 5px 10px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 2px 2px 0 var(--line-strong);
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
       transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.12s ease, background 0.12s ease;
       white-space: nowrap;
     }
 
     .btn-action:hover {
       background: #f1f5f9;
-      transform: translate(-1px, -1px);
-      box-shadow: 3px 3px 0 var(--line-strong);
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.12);
     }
 
     .btn-action:active {
-      transform: translate(1px, 1px);
-      box-shadow: 1px 1px 0 var(--line-strong);
+      transform: translateY(0);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
     }
 
     .btn-action.btn-ics {
@@ -193,7 +195,8 @@
       gap: 8px;
       padding: 5px 10px;
       background: var(--paper);
-      border: 2px solid var(--line-strong);
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 1px 5px rgba(15, 23, 42, 0.04);
       flex-shrink: 0;
       flex-wrap: wrap;
     }
@@ -265,8 +268,8 @@
 
     .month-card {
       background: var(--paper);
-      border: 2px solid var(--line-strong);
-      box-shadow: 3px 3px 0 var(--line-strong);
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -532,7 +535,7 @@
     .ms-chip:hover {
       background: #fef9c3;
       transform: translateY(-2px);
-      box-shadow: 2px 2px 0 var(--line-strong);
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
     }
 
     .ms-chip.cat-hol { border-top-color: var(--c-hol); }
@@ -567,8 +570,8 @@
       left: 0;
       width: 330px;
       background: var(--paper);
-      border: 2px solid var(--line-strong);
-      box-shadow: 6px 6px 0 var(--line-strong);
+      border: 1.5px solid var(--ek-navy);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.18), 0 2px 6px rgba(15, 23, 42, 0.08);
       padding: 12px 13px;
       pointer-events: none;
       z-index: 999;
@@ -577,7 +580,7 @@
 
     .hover-card.is-open {
       display: block;
-      animation: popTooltip 0.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: popTooltip 0.14s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     .hc-top {
@@ -684,8 +687,8 @@
       right: 18px;
       background: var(--ek-navy);
       color: #ffffff;
-      border: 2px solid var(--line-strong);
-      box-shadow: 4px 4px 0 var(--line-strong);
+      border: 1.5px solid var(--ek-yellow);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
       padding: 10px 14px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 11.5px;
@@ -1040,15 +1043,17 @@
     }
 
     function positionHoverCard(clientX, clientY) {
-      const pad = 14;
+      const pad = 12;
       const w = hoverCard.offsetWidth || 330;
       const h = hoverCard.offsetHeight || 190;
-      let x = clientX + 16;
-      let y = clientY - 10;
-      if (x + w + pad > window.innerWidth) x = clientX - w - 16;
+      let x = clientX + 14;
+      let y = clientY - 12;
+      if (x + w + pad > window.innerWidth) x = clientX - w - 14;
+      if (x < pad) x = pad;
       if (y + h + pad > window.innerHeight) y = window.innerHeight - h - pad;
       if (y < pad) y = pad;
-      hoverCard.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+      hoverCard.style.left = `${Math.round(x)}px`;
+      hoverCard.style.top = `${Math.round(y)}px`;
     }
 
     function openHoverCard(key, clientX, clientY) {
