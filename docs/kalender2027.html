@@ -353,6 +353,11 @@
       border-right: none;
     }
 
+    .cal-table thead th.is-col-hover {
+      background: #222222 !important;
+      color: var(--ek-yellow) !important;
+    }
+
     .cal-table tbody tr.is-row-hover td.wk-col {
       background: var(--ek-navy) !important;
       color: var(--ek-yellow) !important;
@@ -1115,6 +1120,7 @@
             </tr>
           </thead>
         `;
+        const dayHeaders = table.querySelectorAll('thead th');
         const tbody = document.createElement('tbody');
 
         const firstDay = new Date(2027, m, 1);
@@ -1171,6 +1177,20 @@
             numSpan.textContent = dNum;
             td.appendChild(numSpan);
 
+            const colHeader = dayHeaders[col + 1];
+            td.addEventListener('mouseenter', (e) => {
+              tr.classList.add('is-row-hover');
+              if (colHeader) colHeader.classList.add('is-col-hover');
+              if (evs.length > 0 || isEasterDate(key)) {
+                openHoverCard(key, e.clientX, e.clientY);
+              }
+            });
+            td.addEventListener('mouseleave', () => {
+              tr.classList.remove('is-row-hover');
+              if (colHeader) colHeader.classList.remove('is-col-hover');
+              closeHoverCard();
+            });
+
             if (evs.length > 0 || isEasterDate(key)) {
               td.classList.add('has-events');
               td.dataset.date = key;
@@ -1188,18 +1208,10 @@
                 td.appendChild(tags);
               }
 
-              td.addEventListener('mouseenter', (e) => {
-                tr.classList.add('is-row-hover');
-                openHoverCard(key, e.clientX, e.clientY);
-              });
               td.addEventListener('mousemove', (e) => {
                 if (hoverCard.classList.contains('is-open')) {
                   positionHoverCard(e.clientX, e.clientY);
                 }
-              });
-              td.addEventListener('mouseleave', () => {
-                tr.classList.remove('is-row-hover');
-                closeHoverCard();
               });
               cellMap.set(key, td);
             }
