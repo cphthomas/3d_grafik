@@ -384,7 +384,7 @@ export function initVoxExplainer(container) {
         .call(unlockNext, null, '+=1.4')
         .call(unlockNext, null, '+=1.4');
     } else if (idx === 3) {
-      // SCENE 4: INTERAKTIVT UGE-HJUL (KLIK PÅ DAGENE I RYTMEN)
+      // SCENE 4: STUDIO-GRADE ANIMEREDE SVG-PILE I UGE-LOOPET
       const wheelSteps = [
         { tag: 'UGE-START', title: 'Intro & Aktiviteter', desc: 'Du ser ugens korte introvideo og løser aktiviteterne individuelt i dit eget tempo.', color: '#0284c7' },
         { tag: 'TORSDAG KL. 08.00', title: 'Aflevering + ny tile åbner', desc: 'Du uploader ugens aktiviteter i Moodle — samtidig åbner løsningsforslag, Kialo og næste uges tile!', color: '#dc2626' },
@@ -395,7 +395,7 @@ export function initVoxExplainer(container) {
       canvasEl.innerHTML = `
         <div class="vx-scene vx-wheel-scene">
           <div class="vx-wheel-left">
-            <div class="vx-kicker">UGERYTMEN · KLIK PÅ ET TRIN</div>
+            <div class="vx-kicker">UGERYTMEN</div>
             <h2 class="vx-title">Samme <span class="vx-hl-wrap"><span class="vx-hl-txt">faste rytme</span><i class="vx-hl-bg"></i></span> hver uge</h2>
             <div class="vx-wheel-card" id="vx-wheel-card">
               <div class="vx-wc-tag" id="vx-wc-tag">TORSDAG KL. 08.00</div>
@@ -404,13 +404,49 @@ export function initVoxExplainer(container) {
             </div>
           </div>
           <div class="vx-wheel-right">
-            <div class="vx-orbit-wrap">
-              <div class="vx-orbit-ring"></div>
-              <div class="vx-orbit-center">FAST<br/>UGE-LOOP</div>
+            <div class="vx-loop-stage">
+              <svg viewBox="0 0 560 400" class="vx-loop-svg" aria-hidden="true">
+                <defs>
+                  <marker id="arr-dark" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#14171a" />
+                  </marker>
+                  <marker id="arr-active" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#dc2626" />
+                  </marker>
+                  <marker id="arr-gold" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#d97706" />
+                  </marker>
+                  <marker id="arr-navy" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#002e6d" />
+                  </marker>
+                  <marker id="arr-blue" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#0284c7" />
+                  </marker>
+                </defs>
+
+                <!-- 4 smukke buede pile der forbinder 01 -> 02 -> 03 -> 04 -> 01 -->
+                <path id="arc-0" class="vx-loop-arc" d="M 358 58 Q 465 72 468 158" marker-end="url(#arr-dark)" />
+                <path id="arc-1" class="vx-loop-arc" d="M 468 242 Q 465 328 368 342" marker-end="url(#arr-dark)" />
+                <path id="arc-2" class="vx-loop-arc" d="M 192 342 Q 95 328 92 242" marker-end="url(#arr-dark)" />
+                <path id="arc-3" class="vx-loop-arc" d="M 92 158 Q 95 72 202 58" marker-end="url(#arr-dark)" />
+
+                <!-- Animeret lysende strøm-sti langs hver bue -->
+                <path id="arc-flow-0" class="vx-loop-flow" d="M 358 58 Q 465 72 468 158" stroke="#dc2626" marker-end="url(#arr-active)" />
+                <path id="arc-flow-1" class="vx-loop-flow" d="M 468 242 Q 465 328 368 342" stroke="#d97706" marker-end="url(#arr-gold)" />
+                <path id="arc-flow-2" class="vx-loop-flow" d="M 192 342 Q 95 328 92 242" stroke="#002e6d" marker-end="url(#arr-navy)" />
+                <path id="arc-flow-3" class="vx-loop-flow" d="M 92 158 Q 95 72 202 58" stroke="#0284c7" marker-end="url(#arr-blue)" />
+
+                <!-- Center-emblem -->
+                <rect x="215" y="168" width="130" height="64" fill="#14171a" />
+                <rect x="215" y="168" width="130" height="4" fill="#f7e81b" />
+                <text x="280" y="196" text-anchor="middle" fill="#f7e81b" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="700" letter-spacing="1.5">FAST</text>
+                <text x="280" y="216" text-anchor="middle" fill="#ffffff" font-family="IBM Plex Mono, monospace" font-size="13" font-weight="700" letter-spacing="1.5">UGE-LOOP</text>
+              </svg>
+
               ${wheelSteps
                 .map(
                   (s, i) => `
-                <button class="vx-orbit-node pos-${i}" data-i="${i}" style="--c:${s.color}">
+                <button class="vx-loop-node ln-${i}" data-i="${i}" style="--c:${s.color}">
                   <b>0${i + 1}</b>
                   <span>${s.tag}</span>
                 </button>
@@ -422,30 +458,50 @@ export function initVoxExplainer(container) {
         </div>
       `;
 
+      // Forbered stroke-længde på de 4 animerede pile
+      const flowArcs = [0, 1, 2, 3].map((k) => {
+        const p = canvasEl.querySelector(`#arc-flow-${k}`);
+        const len = p.getTotalLength();
+        p.style.strokeDasharray = String(len);
+        p.style.strokeDashoffset = String(len);
+        return { p, len };
+      });
+
       const selectWheel = (i) => {
         const s = wheelSteps[i];
-        canvasEl.querySelectorAll('.vx-orbit-node').forEach((n, idx2) => n.classList.toggle('is-active', idx2 === i));
+        canvasEl.querySelectorAll('.vx-loop-node').forEach((n, idx2) => n.classList.toggle('is-active', idx2 === i));
         const tag = canvasEl.querySelector('#vx-wc-tag');
         tag.textContent = s.tag;
         tag.style.background = s.color;
         canvasEl.querySelector('#vx-wc-title').textContent = s.title;
         canvasEl.querySelector('#vx-wc-desc').textContent = s.desc;
-        gsap.fromTo('#vx-wheel-card', { y: 8, opacity: 0.7 }, { y: 0, opacity: 1, duration: 0.28, ease: 'power2.out' });
+        gsap.fromTo('#vx-wheel-card', { y: 10, opacity: 0.65 }, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' });
+
+        // Tegn den indkommende bue-pil levende mod den aktive node!
+        const arcIdx = (i + 3) % 4;
+        flowArcs.forEach((fa, k) => {
+          gsap.killTweensOf(fa.p);
+          if (k === arcIdx) {
+            gsap.set(fa.p, { opacity: 1, strokeDashoffset: fa.len });
+            gsap.to(fa.p, { strokeDashoffset: 0, duration: 0.72, ease: 'power2.out' });
+          } else {
+            gsap.to(fa.p, { opacity: 0.16, duration: 0.3 });
+          }
+        });
       };
 
-      canvasEl.querySelectorAll('.vx-orbit-node').forEach((btn) => {
+      canvasEl.querySelectorAll('.vx-loop-node').forEach((btn) => {
         btn.addEventListener('click', () => selectWheel(Number(btn.dataset.i)));
       });
-      selectWheel(1);
+      selectWheel(0);
 
       tl.from('.vx-wheel-left > *', { x: -18, opacity: 0, stagger: 0.08, duration: 0.4 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-        .from('.vx-orbit-node', { scale: 0.7, opacity: 0, stagger: 0.1, duration: 0.42, ease: 'back.out(1.4)' }, '-=0.25')
-        // Automatisk film-skift gennem alle 4 trin i uge-hjulet!
-        .call(() => selectWheel(0), null, '+=0.2')
-        .call(() => selectWheel(1), null, '+=1.6')
-        .call(() => selectWheel(2), null, '+=1.8')
-        .call(() => selectWheel(3), null, '+=1.8');
+        .from('.vx-loop-node', { scale: 0.75, opacity: 0, stagger: 0.1, duration: 0.4, ease: 'back.out(1.4)' }, '-=0.25')
+        .call(() => selectWheel(1), null, '+=1.4')
+        .call(() => selectWheel(2), null, '+=1.7')
+        .call(() => selectWheel(3), null, '+=1.7')
+        .call(() => selectWheel(0), null, '+=1.7');
     } else if (idx === 4) {
       // SCENE 5: INTERAKTIVT METRO-KORT OVER DE 5 FAGOMRÅDER (INGEN BARCHARTS!)
       const pathD = `M ${METRO_STATIONS[0].x} ${METRO_STATIONS[0].y} ` +
@@ -464,8 +520,14 @@ export function initVoxExplainer(container) {
 
           <div class="vx-metro-board">
             <svg viewBox="0 0 1000 240" class="vx-metro-svg">
+              <defs>
+                <marker id="metro-arrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+                  <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#14171a" />
+                </marker>
+              </defs>
               <path d="${pathD}" class="vx-metro-line-bg" />
-              <path d="${pathD}" class="vx-metro-line-fg" id="vx-metro-line" />
+              <path d="${pathD}" class="vx-metro-line-fg" id="vx-metro-line" marker-end="url(#metro-arrow)" />
+              <circle id="vx-metro-pulse" r="11" fill="#f7e81b" stroke="#14171a" stroke-width="3" cx="${METRO_STATIONS[0].x}" cy="${METRO_STATIONS[0].y}" />
               ${METRO_STATIONS.map(
                 (s, i) => `
                 <g class="vx-station" data-i="${i}" transform="translate(${s.x}, ${s.y})">
@@ -486,6 +548,7 @@ export function initVoxExplainer(container) {
         </div>
       `;
 
+      const pulseDot = canvasEl.querySelector('#vx-metro-pulse');
       const selectStation = (i) => {
         const s = METRO_STATIONS[i];
         const badge = canvasEl.querySelector('#vx-sd-badge');
@@ -493,6 +556,7 @@ export function initVoxExplainer(container) {
         badge.style.background = s.color;
         canvasEl.querySelector('#vx-sd-text').textContent = s.desc;
         canvasEl.querySelectorAll('.vx-station').forEach((g, idx2) => g.classList.toggle('is-active', idx2 === i));
+        gsap.to(pulseDot, { attr: { cx: s.x, cy: s.y }, duration: 0.65, ease: 'power3.inOut' });
       };
 
       canvasEl.querySelectorAll('.vx-station').forEach((g) => {
