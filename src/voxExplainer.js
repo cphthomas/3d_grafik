@@ -117,27 +117,27 @@ export function initVoxExplainer(container) {
     const tl = gsap.timeline();
     activeTimeline = tl;
 
-    // Kontrolleret 3D-kameraindflyvning + blød dokumentar-zoom (klipper aldrig i kanterne!)
+    // Raffineret 3D-kameraindflyvning + blød dokumentar-bevægelse (klipper ALDRIG i kanterne)
     gsap.killTweensOf(canvasEl);
     const dir = idx % 2 === 0 ? 1 : -1;
     gsap.fromTo(
       canvasEl,
-      { scale: 0.96, rotationY: dir * 4.2, rotationX: 1.5, x: dir * -10, opacity: 0.35 },
+      { scale: 0.975, rotationY: dir * 2.6, rotationX: 0.9, x: dir * -6, opacity: 0.35 },
       {
         scale: 1.0,
-        rotationY: dir * -1.8,
-        rotationX: -0.6,
-        x: dir * 6,
+        rotationY: dir * -1.0,
+        rotationX: -0.4,
+        x: dir * 3,
         opacity: 1,
-        duration: 0.65,
+        duration: 0.6,
         ease: 'power3.out',
         onComplete: () => {
           gsap.to(canvasEl, {
-            scale: 1.035,
-            rotationY: dir * 1.8,
-            rotationX: 0.7,
-            x: dir * -6,
-            y: -3,
+            scale: 1.018,
+            rotationY: dir * 1.1,
+            rotationX: 0.4,
+            x: dir * -3,
+            y: -2,
             duration: 7.2,
             ease: 'sine.inOut'
           });
@@ -389,11 +389,21 @@ export function initVoxExplainer(container) {
         <div class="vx-scene vx-rhythm-intro">
           <div class="vx-kicker">UGERYTMEN · TO FASTE FRISTER</div>
           <h2 class="vx-title">Samme <span class="vx-hl-wrap"><span class="vx-hl-txt">faste rytme</span><i class="vx-hl-bg"></i></span> hver uge</h2>
-          <div class="vx-two-deadlines">
+          <div class="vx-two-deadlines-wrap">
             <div class="vx-dl-card vx-dl-red">
               <div class="vx-dl-badge">TORSDAG KL. 08.00</div>
               <h3>Aktiviteter & ny tile</h3>
               <p>Du afleverer ugens individuelle aktiviteter — og i samme øjeblik åbner løsningsforslag, Kialo og næste uges tile i Moodle.</p>
+            </div>
+            <div class="vx-dl-arrow" aria-hidden="true">
+              <svg viewBox="0 0 80 48" width="64" height="40">
+                <defs>
+                  <marker id="dl-arr" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="8" markerHeight="8" orient="auto">
+                    <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#14171a" />
+                  </marker>
+                </defs>
+                <path id="vx-dl-path" d="M 6 24 Q 40 8 70 24" fill="none" stroke="#14171a" stroke-width="4" stroke-linecap="round" marker-end="url(#dl-arr)" />
+              </svg>
             </div>
             <div class="vx-dl-card vx-dl-navy">
               <div class="vx-dl-badge vx-dl-gold">TIRSDAG KL. 08.00 (UGEN EFTER)</div>
@@ -403,9 +413,12 @@ export function initVoxExplainer(container) {
           </div>
         </div>
       `;
+      const dlPath = canvasEl.querySelector('#vx-dl-path');
+      const dlLen = dlPath.getTotalLength();
       tl.from('.vx-kicker, .vx-title', { y: 16, opacity: 0, stagger: 0.08, duration: 0.42 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-        .from('.vx-dl-card', { y: 28, opacity: 0, stagger: 0.16, duration: 0.5, ease: 'back.out(1.2)' }, '-=0.15');
+        .from('.vx-dl-card', { y: 24, opacity: 0, stagger: 0.16, duration: 0.48, ease: 'back.out(1.2)' }, '-=0.15')
+        .fromTo(dlPath, { strokeDasharray: dlLen, strokeDashoffset: dlLen }, { strokeDashoffset: 0, duration: 0.65, ease: 'power2.out' }, '-=0.2');
     } else if (idx === 4) {
       // SCENE 4B: FULDSKÆRMS ANIMERET UGE-LOOP (FYLDER HELE RAMMEN!)
       const wheelSteps = [
@@ -577,49 +590,60 @@ export function initVoxExplainer(container) {
         .call(() => selectStation(3), null, '+=1.35')
         .call(() => selectStation(4), null, '+=1.35');
     } else if (idx === 6) {
-      // SCENE 7: INTERAKTIV OLA-STEMPEL-MASKINE (KLIK FOR AT STEMPLE GODKENDT!)
+      // SCENE 7: INTERAKTIV OLA-STEMPEL-MASKINE — 100% SYNGLIGT GULT BANNER + ANIMEREDE PILE
       canvasEl.innerHTML = `
         <div class="vx-scene vx-olas">
-          <div class="vx-kicker">OBLIGATORISKE MILEPÆLE · KLIK FOR AT STEMPLE</div>
+          <div class="vx-kicker">OBLIGATORISKE MILEPÆLE</div>
           <h2 class="vx-title">Tre <span class="vx-hl-wrap"><span class="vx-hl-txt">OLA-hæfter</span><i class="vx-hl-bg"></i></span> låser eksamen op</h2>
           <div class="vx-ola-cards">
             <button class="vx-ola-card vx-ola-btn" data-ola="1">
+              <div class="vx-stamp">GODKENDT ✓</div>
               <div class="vx-ola-date">TEMA 1 · 4 UGER</div>
               <h3>OLA-hæfte 1</h3>
               <p>Finanssektoren, metode, statistik og hypotesetest.</p>
-              <div class="vx-stamp">GODKENDT ✓</div>
             </button>
             <button class="vx-ola-card vx-ola-btn" data-ola="2">
+              <div class="vx-stamp">GODKENDT ✓</div>
               <div class="vx-ola-date">TEMA 2 · 7 UGER</div>
               <h3>OLA-hæfte 2</h3>
               <p>Regression, finansiering og mikroøkonomi.</p>
-              <div class="vx-stamp">GODKENDT ✓</div>
             </button>
             <button class="vx-ola-card vx-ola-btn" data-ola="3">
+              <div class="vx-stamp">GODKENDT ✓</div>
               <div class="vx-ola-date">TEMA 3 · 3 UGER</div>
               <h3>OLA-hæfte 3</h3>
               <p>Markedsformer, optimering og kalkulation.</p>
-              <div class="vx-stamp">GODKENDT ✓</div>
             </button>
           </div>
-          <div class="vx-exam-gate" id="vx-exam-gate">🔒 Indstilling til eksamen: Klik på alle 3 OLA-hæfter ovenfor</div>
+          <div class="vx-ola-down-arrow" aria-hidden="true">
+            <svg viewBox="0 0 120 34" width="90" height="26">
+              <defs>
+                <marker id="ola-down-arr" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto">
+                  <path d="M 1 1.5 L 10.5 6 L 1 10.5 z" fill="#14171a" />
+                </marker>
+              </defs>
+              <path id="vx-ola-arrow" d="M 60 2 L 60 26" fill="none" stroke="#14171a" stroke-width="3.5" marker-end="url(#ola-down-arr)" />
+            </svg>
+          </div>
+          <div class="vx-exam-gate" id="vx-exam-gate">🔒 Indstilling til eksamen: Alle 3 OLA-hæfter skal godkendes</div>
         </div>
       `;
 
       const stamped = new Set();
       const gateEl = canvasEl.querySelector('#vx-exam-gate');
       const toggleStamp = (btn) => {
+        if (!btn) return;
         const id = btn.dataset.ola;
         if (stamped.has(id)) return;
         stamped.add(id);
         btn.classList.add('is-stamped');
-        gsap.fromTo(btn.querySelector('.vx-stamp'), { scale: 2.2, opacity: 0, rotation: -18 }, { scale: 1, opacity: 1, rotation: -8, duration: 0.35, ease: 'back.out(1.7)' });
+        gsap.fromTo(btn.querySelector('.vx-stamp'), { scale: 2.0, opacity: 0, rotation: -16 }, { scale: 1, opacity: 1, rotation: -6, duration: 0.34, ease: 'back.out(1.7)' });
         if (stamped.size === 3) {
           gateEl.classList.add('is-unlocked');
           gateEl.textContent = '🔓 ALLE 3 OLA GODKENDT — DU ER INDSTILLET TIL 1. INTERNE EKSAMEN!';
-          gsap.fromTo(gateEl, { scale: 0.95 }, { scale: 1.02, duration: 0.3, yoyo: true, repeat: 1 });
+          gsap.fromTo(gateEl, { scale: 0.96 }, { scale: 1.02, duration: 0.28, yoyo: true, repeat: 1 });
         } else {
-          gateEl.textContent = `🔒 ${stamped.size} af 3 OLA godkendt — klik på de sidste for at låse eksamen op`;
+          gateEl.textContent = `🔒 ${stamped.size} af 3 OLA godkendt — på vej mod indstilling til eksamen`;
         }
       };
 
@@ -627,12 +651,13 @@ export function initVoxExplainer(container) {
 
       tl.from('.vx-kicker, .vx-title', { y: 16, opacity: 0, stagger: 0.08, duration: 0.4 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-        .from('.vx-ola-btn', { y: 24, opacity: 0, stagger: 0.12, duration: 0.45, ease: 'back.out(1.2)' }, '-=0.15')
-        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="1"]')), null, '+=0.55')
-        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="2"]')), null, '+=1.2')
-        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="3"]')), null, '+=1.2');
+        .from('.vx-ola-btn', { y: 22, opacity: 0, stagger: 0.12, duration: 0.42, ease: 'back.out(1.2)' }, '-=0.15')
+        .from('.vx-ola-down-arrow, .vx-exam-gate', { y: 12, opacity: 0, duration: 0.35 }, '-=0.1')
+        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="1"]')), null, '+=0.45')
+        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="2"]')), null, '+=1.15')
+        .call(() => toggleStamp(canvasEl.querySelector('.vx-ola-btn[data-ola="3"]')), null, '+=1.15');
     } else {
-      // SCENE 7: ANIMERET 30-MINUTTERS EKSAMENS-UR
+      // SCENE 8: ANIMERET 30-MINUTTERS EKSAMENS-UR + GENSPIL-KNAP
       canvasEl.innerHTML = `
         <div class="vx-scene vx-exam-split">
           <div class="vx-exam-left">
@@ -644,20 +669,21 @@ export function initVoxExplainer(container) {
               <div class="vx-es-row"><b>03 · WISEFLOW</b><span>Aflevering af det skriftlige projekt på WISEflow.</span></div>
               <div class="vx-es-row is-highlight"><b>04 · 30 MIN.</b><span>Individuel mundtlig prøve på Zoom (7-trinsskalaen).</span></div>
             </div>
+            <button class="vx-replay-btn" id="vx-replay-btn">↻ Se filmen igen</button>
           </div>
           <div class="vx-exam-right">
             <div class="vx-clock-card">
               <svg viewBox="0 0 200 200" class="vx-clock-svg">
-                <circle cx="100" cy="100" r="76" fill="#ffffff" stroke="#111317" stroke-width="3" />
-                <!-- 5 min (1/6) = gul, 20 min (4/6) = EK-navy, 5 min votering = grå -->
-                <circle cx="100" cy="100" r="56" fill="none" stroke="#f5c518" stroke-width="28" stroke-dasharray="58.6 351.8" stroke-dashoffset="0" transform="rotate(-90 100 100)" class="vx-pie-seg" />
+                <circle cx="100" cy="100" r="76" fill="#ffffff" stroke="#14171a" stroke-width="3" />
+                <circle cx="100" cy="100" r="56" fill="none" stroke="#f7e81b" stroke-width="28" stroke-dasharray="58.6 351.8" stroke-dashoffset="0" transform="rotate(-90 100 100)" class="vx-pie-seg" />
                 <circle cx="100" cy="100" r="56" fill="none" stroke="#002e6d" stroke-width="28" stroke-dasharray="234.5 351.8" stroke-dashoffset="-58.6" transform="rotate(-90 100 100)" class="vx-pie-seg" />
                 <circle cx="100" cy="100" r="56" fill="none" stroke="#94a3b8" stroke-width="28" stroke-dasharray="58.6 351.8" stroke-dashoffset="-293.1" transform="rotate(-90 100 100)" class="vx-pie-seg" />
-                <text x="100" y="96" text-anchor="middle" class="vx-clock-big">30</text>
-                <text x="100" y="114" text-anchor="middle" class="vx-clock-sub">MINUTTER</text>
+                <line id="vx-clock-hand" x1="100" y1="100" x2="100" y2="34" stroke="#14171a" stroke-width="3" stroke-linecap="round" />
+                <circle cx="100" cy="100" r="5" fill="#14171a" />
+                <text x="100" y="132" text-anchor="middle" class="vx-clock-big">30 MIN</text>
               </svg>
               <div class="vx-clock-legend">
-                <div><i style="background:#f5c518"></i> <b>5 min.</b> Egen præsentation (nye vinkler)</div>
+                <div><i style="background:#f7e81b"></i> <b>5 min.</b> Egen præsentation (nye vinkler)</div>
                 <div><i style="background:#002e6d"></i> <b>20 min.</b> Samtale om projekt & læringsmål</div>
                 <div><i style="background:#94a3b8"></i> <b>5 min.</b> Votering & karakter</div>
               </div>
@@ -666,10 +692,20 @@ export function initVoxExplainer(container) {
         </div>
       `;
 
-      tl.from('.vx-exam-left > *', { x: -18, opacity: 0, stagger: 0.08, duration: 0.42 })
+      canvasEl.querySelector('#vx-replay-btn').addEventListener('click', () => {
+        if (onRequestPlayCb) {
+          goToStep(0);
+          onRequestPlayCb();
+        } else {
+          goToStep(0);
+        }
+      });
+
+      tl.from('.vx-exam-left > *', { x: -16, opacity: 0, stagger: 0.08, duration: 0.4 })
         .fromTo('.vx-hl-bg', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power3.out' }, '-=0.2')
-        .from('.vx-clock-card', { scale: 0.9, opacity: 0, duration: 0.5, ease: 'back.out(1.25)' }, '-=0.3')
-        .from('.vx-pie-seg', { opacity: 0, stagger: 0.18, duration: 0.45 }, '-=0.2');
+        .from('.vx-clock-card', { scale: 0.92, opacity: 0, duration: 0.48, ease: 'back.out(1.25)' }, '-=0.28')
+        .from('.vx-pie-seg', { opacity: 0, stagger: 0.28, duration: 0.5 }, '-=0.2')
+        .to('#vx-clock-hand', { rotation: 360, transformOrigin: '100px 100px', duration: 4.5, ease: 'power1.inOut' }, '-=0.5');
     }
   }
 
